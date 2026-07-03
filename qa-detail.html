@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퍼드(FERD) - 소방청 질의회신 상세</title>
+    <style>
+        @font-face {
+            font-family: 'NexonLv2Gothic';
+            src: url('NexonLv2Gothic.ttf') format('truetype');
+            font-weight: normal; font-style: normal;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'NexonLv2Gothic', sans-serif; line-height: 1.6; color: #e2e8f0; background-color: #0a0a0a; padding-top: 80px; display: flex; flex-direction: column; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; }
+        
+        .main-header { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 2rem; background-color: rgba(10, 10, 10, 0.9); border-bottom: 1px solid #2d3748; z-index: 100; display: flex; align-items: center; }
+        .main-header img { height: 35px; cursor: pointer; }
+        
+        .container { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; flex: 1; width: 100%; }
+        
+        /* 상세 페이지 테이블 디자인 */
+        .detail-header { border-top: 2px solid #2b6cb0; margin-bottom: 1rem; }
+        .detail-info { font-size: 0.9rem; color: #a0aec0; padding: 0.5rem 0; border-bottom: 1px solid #2d3748; text-align: right; }
+        
+        .detail-table { width: 100%; border-collapse: collapse; background-color: #1a202c; border-radius: 5px; overflow: hidden; border: 1px solid #2d3748; }
+        .detail-table th, .detail-table td { padding: 1.5rem; border-bottom: 1px solid #2d3748; }
+        .detail-table th { width: 20%; background-color: #11151c; color: #cbd5e0; font-weight: bold; text-align: center; border-right: 1px solid #2d3748; }
+        .detail-table td { width: 80%; color: #e2e8f0; }
+        
+        .detail-content { min-height: 200px; white-space: pre-wrap; }
+        
+        .btn-wrap { margin-top: 2rem; text-align: left; }
+        .btn-list { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.5rem; border: 1px solid #4a5568; background: #1a202c; color: #e2e8f0; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-list:hover { background: #2d3748; }
+
+        /* Footer */
+        footer { background: #161b22; border-top: 1px solid #2d3748; padding: 0.8rem 1rem 0.5rem 1rem; margin-top: auto; }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4rem; border-bottom: 1px solid #2d3748; padding-bottom: 0.5rem; }
+        .footer-item { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+        .footer-info p:first-child { color: #a0aec0; font-size: 0.65rem; margin-bottom: 0; text-align: left; }
+        .footer-info p:last-child { color: #fff; font-size: 0.85rem; font-weight: normal; margin-bottom: 0; text-align: left; }
+        .footer-copyright { text-align: center; margin-top: 0.5rem; font-size: 0.75rem; color: #718096; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <a href="index.html"><img src="logo.png" alt="FERD 로고"></a>
+    </header>
+
+    <section class="container">
+        <div class="detail-header">
+            <div class="detail-info">조회 4509 건</div>
+        </div>
+        
+        <table class="detail-table">
+            <tr>
+                <th>제목</th>
+                <td style="font-weight: bold; font-size: 1.1rem;">스프링클러설비의 화재안전기준(NFSC 103) 개정사항 적용 시점</td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td class="detail-content">스프링클러설비의 화재안전기준 개정에 따른 적용 시점에 대한 문의가 많아 답변을 게재하니 업무에 참고하시기 바랍니다.
+
+(질의사항)
+1. 스프링클러설비의 화재안전기준 부칙<제2021-12호, 2021.1.29> 이 고시는 발령한 날부터 시행한다.라고 규정하고 있습니다. 그럼 기존 시공중인 대상도 시행일부터 적용되어야 하나요
+2. 유수검지장치의 시험장치나 방풍실의 경우 이미 허가와 착공신고가 끝났는데 적용 가능한가요
+
+(답변)
+- 고시가 개정되면서 부칙이나 경과조치에 적용시점에 대하여 명시하지 않는 경우 시행일부터 적용합니다. 소방의 경우 건축허가 접수일부터 적용하면 됩니다. 다만, 국민에게 이익이 되게 법령이 개정되는 경우 기존 법령의 적용에 대하여 명시하지 않았다면 "신법 우선원칙" 또는 "대법원의 다수 판례"에 의거 개정 고시를 적용할 수 있습니다.
+- 그러므로 가압송수장치의 부식 방지를 위한 조항의 경우 국민에게 부담을 주는 것으로 소급적용하여서는 안됩니다. 그러나 유수검지장치의 시험장치 위치 조항의 경우 국민에게 이익을 줄 수 있는 것으로 공사전이나 공사중인 완공되지 아니한 대상에는 적용이 가능하다고 판단됩니다.</td>
+            </tr>
+            <tr>
+                <th>첨부파일</th>
+                <td><a href="#" style="color: #63b3ed; text-decoration: underline;">[첨부파일] NFSC_103_해설서.pdf</a></td>
+            </tr>
+        </table>
+        
+        <div class="btn-wrap">
+            <button class="btn-list" onclick="window.close()">▤ 목록</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-item"><div class="footer-info"><p>COMPANY</p><p>퍼드 (FERD)</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>ADDRESS</p><p>대구 수성구 청수로 3층</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>CONTACT</p><p>0507-1353-5682</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>EMAIL</p><p>ferd@ferd.co.kr</p></div></div>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2021 FERD. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+</body>
+</html>

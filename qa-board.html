@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퍼드(FERD) - 소방청 질의회신</title>
+    <style>
+        @font-face {
+            font-family: 'NexonLv2Gothic';
+            src: url('NexonLv2Gothic.ttf') format('truetype');
+            font-weight: normal; font-style: normal;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'NexonLv2Gothic', sans-serif; line-height: 1.6; color: #e2e8f0; background-color: #0a0a0a; padding-top: 80px; display: flex; flex-direction: column; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; }
+        h1, h2, h3 { color: #ffffff; font-weight: 700; word-break: keep-all; }
+        p { color: #a0aec0; margin-bottom: 1rem; word-break: keep-all; }
+        
+        .main-header { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 2rem; background-color: rgba(10, 10, 10, 0.9); border-bottom: 1px solid #2d3748; z-index: 100; display: flex; align-items: center; }
+        .main-header img { height: 35px; cursor: pointer; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; flex: 1; width: 100%; }
+        .section-title { font-size: 2.2rem; margin-bottom: 3rem; text-align: center; }
+        
+        .board-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
+        .board-search { display: flex; gap: 0.5rem; }
+        .board-search select, .board-search input { padding: 0.5rem; border: 1px solid #4a5568; background: #1a202c; color: #e2e8f0; border-radius: 4px; outline: none; }
+        .board-search button { padding: 0.5rem 1.5rem; background: #1f3b60; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .board-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.95rem; margin-bottom: 1rem; }
+        .board-table th { border-top: 2px solid #63b3ed; border-bottom: 1px solid #4a5568; padding: 1rem; color: #e2e8f0; font-weight: bold; }
+        .board-table td { padding: 1rem; border-bottom: 1px solid #2d3748; color: #a0aec0; }
+        .board-table tr:hover td { background-color: rgba(255,255,255,0.05); }
+        .board-table .title-cell { text-align: left; cursor: pointer; color: #e2e8f0; }
+        .board-table .title-cell:hover { text-decoration: underline; color: #63b3ed; }
+
+        footer { background: #161b22; border-top: 1px solid #2d3748; padding: 0.8rem 1rem 0.5rem 1rem; margin-top: auto; }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4rem; border-bottom: 1px solid #2d3748; padding-bottom: 0.5rem; }
+        .footer-item { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+        .footer-info p:first-child { color: #a0aec0; font-size: 0.65rem; margin-bottom: 0; text-align: left; }
+        .footer-info p:last-child { color: #fff; font-size: 0.85rem; font-weight: normal; margin-bottom: 0; text-align: left; }
+        .footer-copyright { text-align: center; margin-top: 0.5rem; font-size: 0.75rem; color: #718096; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <a href="index.html"><img src="logo.png" alt="FERD 로고"></a>
+    </header>
+
+    <section class="container">
+        <h2 class="section-title">퍼드 연구소, 소방법 질의회신 해설</h2>
+        
+        <div class="board-controls">
+            <div style="color: #a0aec0; font-size: 0.95rem;">총 <strong>10</strong>건</div>
+            <div class="board-search">
+                <select>
+                    <option>제목</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="검색어 입력 후 엔터" onkeyup="if(window.event.keyCode==13){filterTable()}">
+                <button type="button" onclick="filterTable()">🔍 검색</button>
+            </div>
+        </div>
+
+        <table class="board-table" id="qaTable">
+            <thead>
+                <tr>
+                    <th style="width: 10%;">번호</th>
+                    <th style="width: 60%;">제목</th>
+                    <th style="width: 15%;">조회</th>
+                    <th style="width: 15%;">작성일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>10</td><td class="title-cell" onclick="window.open('qa-detail.html', '_blank')">스프링클러설비의 화재안전기준(NFSC 103) 개정사항 적용 시점</td><td>4509</td><td>2026-07-10</td></tr>
+                <tr><td>9</td><td class="title-cell" onclick="window.open('qa-detail.html', '_blank')">소방시설법령 개정 시행 관련 주요 질의회신(Q&A)</td><td>8295</td><td>2026-07-09</td></tr>
+                <tr><td>8</td><td class="title-cell" onclick="window.open('qa-detail.html', '_blank')">자동화재탐지설비 오작동 시 수신기를 임의 차단해도 되나요?</td><td>315</td><td>2026-07-08</td></tr>
+                <tr><td>7</td><td class="title-cell" onclick="window.open('qa-detail.html', '_blank')">수신기에 외부장치를 연결하는 원격 제어는 합법인가요?</td><td>842</td><td>2026-07-07</td></tr>
+                <tr><td>6</td><td class="title-cell" onclick="window.open('qa-detail.html', '_blank')">소방안전관리자 업무 대행 시 원격 감시 시스템 인정 여부</td><td>1250</td><td>2026-07-06</td></tr>
+                <tr><td>5</td><td class="title-cell" onclick="window.open('qa-detail.html', '_blank')">방화문 자동폐쇄장치 연동 관련 소방청 지침 안내</td><td>930</td><td>2026-07-05</td></tr>
+                <tr><td>4</td><td class="title-cell" onclick="window.open('qa-detail.html', '_blank')">비화재보(오작동) 발생 시 소방서 오인 출동 과태료 부과 기준</td><td>3883</td><td>2026-07-04</td></tr>
+                <tr><td>3</td><td class="title-cell" onclick="window.open('qa-detail.html', '_blank')">무선식 화재감지기 형식승인 및 통신 규격 질의</td><td>11670</td><td>2026-07-03</td></tr>
+                <tr><td>2</td><td class="title-cell" onclick="window.open('qa-detail.html', '_blank')">아파트 지하주차장 소방시설 적용 기준 변경 안내</td><td>7240</td><td>2026-07-02</td></tr>
+                <tr><td>1</td><td class="title-cell" onclick="window.open('qa-detail.html', '_blank')">IoT 기반 화재알림설비 설치 시 기존 설비 면제 조건</td><td>6396</td><td>2026-07-01</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-item"><div class="footer-info"><p>COMPANY</p><p>퍼드 (FERD)</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>ADDRESS</p><p>대구 수성구 청수로 3층</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>CONTACT</p><p>0507-1353-5682</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>EMAIL</p><p>ferd@ferd.co.kr</p></div></div>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2021 FERD. ALL RIGHTS RESERVED.
+        </div>
+    </footer>
+
+    <script>
+        // 검색 필터 기능 
+        function filterTable() {
+            let input = document.getElementById("searchInput");
+            let filter = input.value.toLowerCase();
+            let table = document.getElementById("qaTable");
+            let tr = table.getElementsByTagName("tr");
+
+            // 제목(두 번째 열)을 기준으로 검색
+            for (let i = 1; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    let txtValue = td.textContent || td.innerText;
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }       
+            }
+        }
+    </script>
+</body>
+</html>
