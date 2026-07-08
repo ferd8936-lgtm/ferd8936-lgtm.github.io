@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퍼드(FERD) - 셉(SEB) 시스템</title>
+    <meta name="description" content="앱 설치 없이 문자로 끝내는 100% 합법적인 화재수신기 무인 원격 관제 솔루션, 퍼드 셉(SEB) 시스템">
+    <meta name="keywords" content="비화재보, 오작동, 화재수신기, 원격제어, 셉시스템, SEB, 퍼드, FERD, 소방안전">
+    <style>
+        @font-face {
+            font-family: 'NexonLv2Gothic';
+            src: url('NexonLv2Gothic.ttf') format('truetype');
+            font-weight: normal; font-style: normal;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'NexonLv2Gothic', sans-serif; line-height: 1.6; color: #1a202c; background-color: #ffffff; padding-top: 80px; }
+        a { text-decoration: none; color: inherit; }
+        h1, h2, h3 { color: #1a202c; font-weight: 700; word-break: keep-all; }
+        p { color: #000000; margin-bottom: 1rem; word-break: keep-all; } /* 설명하는 글자를 선명한 검정색으로 변경 */
+        .highlight { color: #e53e3e; }
+        section[id] { scroll-margin-top: 110px; } /* 상단 메뉴 클릭 시 제목 짤림 방지 여백 */
+        
+        /* 1. 상단 바 디자인 (가로 가운데 정렬 및 간격 확대) */
+        .main-header { position: fixed; top: 0; left: 0; width: 100%; padding: 0.75rem 2rem; background-color: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #e2e8f0; z-index: 100; display: flex; align-items: center; justify-content: center; gap: 4rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .main-header img { height: 60px; cursor: pointer; } 
+        .header-nav { display: flex; gap: 4rem; font-weight: bold; color: #1a202c; font-size: 1.15rem; margin-left: 0; }
+        .header-nav a:hover { color: #e53e3e; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        .text-center { text-align: center; }
+        .section-title { font-size: 2.2rem; margin-bottom: 3rem; text-align: center; }
+        
+        /* 2. 비화재보 현황 (배경 이미지 블러 제거 및 시인성 보완) */
+        .dark-section { position: relative; color: #e2e8f0; padding: 5rem 0; margin-bottom: 2rem; background: #000000; overflow: hidden; }
+        .dark-section::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('비화재보 통계 배경.png') center/cover no-repeat; opacity: 0.6; filter: blur(0px) brightness(0.4); z-index: 0; transform: scale(1.05); }
+        .dark-section .container { position: relative; z-index: 1; }
+        .dark-section h2, .dark-section h3, .dark-section p { color: #ffffff; }
+        /* 1. 비화재보 현황 세로형 막대 그래프 UI 디자인 (슬림화 및 가독성 전면 개편) */
+        .v-chart-container { width: 100%; max-width: 800px; margin: 2rem auto; background: rgba(20, 26, 38, 0.85); border-radius: 16px; padding: 2rem 1.5rem 3rem 1.5rem; box-shadow: 0 12px 30px rgba(0,0,0,0.4); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.1); text-align: center; }
+        .v-chart { display: flex; justify-content: space-around; align-items: flex-end; height: 230px; margin-top: 5.5rem; padding-bottom: 0.2rem; border-bottom: 2px solid rgba(255, 255, 255, 0.2); }
+        .v-chart-col { display: flex; flex-direction: column; align-items: center; width: 18%; height: 100%; justify-content: flex-end; position: relative; }
+        .v-chart-bar { width: 42px; background: linear-gradient(to top, #e53e3e, #f56565); border-radius: 6px 6px 0 0; position: relative; box-shadow: 0 0 15px rgba(245, 101, 101, 0.3); transition: all 0.2s ease; }
+        .v-chart-bar:hover { background: linear-gradient(to top, #c53030, #e53e3e); transform: scaleX(1.05); }
+        .v-chart-value { position: absolute; top: -64px; left: 50%; transform: translateX(-50%); color: #ffffff; font-size: 0.9rem; font-weight: bold; white-space: nowrap; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .v-chart-value .rate { color: #fc8181; font-size: 0.8rem; font-weight: 700; display: block; margin-top: 0.1rem; }
+        .v-chart-value .fire-cases { color: #ffffff; font-size: 0.72rem; font-weight: normal; display: block; margin-top: 0.1rem; }
+        .v-chart-label { position: absolute; bottom: -2.2rem; color: #90cdf4; font-weight: bold; font-size: 1rem; white-space: nowrap; }
+        @media (max-width: 600px) {
+            .v-chart { height: 180px; margin-top: 5rem; }
+            .v-chart-bar { width: 32px; }
+            .v-chart-value { top: -58px; font-size: 0.78rem; }
+            .v-chart-value .rate { font-size: 0.72rem; }
+            .v-chart-value .fire-cases { font-size: 0.65rem; }
+            .v-chart-label { font-size: 0.85rem; bottom: -1.8rem; }
+        }
+        
+        /* 3. 치명적 문제점 세련된 디자인 */
+        .problem-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .problem-card { background: linear-gradient(to bottom, #ffffff, #f7fafc); border: 1px solid #e2e8f0; border-top: 5px solid #e53e3e; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.06); transition: transform 0.3s ease; }
+        .problem-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .problem-card h3 { color: #1a202c; font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .problem-card p { text-align: left; } /* 설명 글 가독성 좋은 왼쪽 정렬로 변경 */
+
+        /* 3대 솔루션 이미지 공통 스타일 추가 */
+        .solution-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #e2e8f0; display: block; }
+        
+        /* 5. 3대 솔루션 (유튜브 제거, 깔끔한 텍스트 카드형 최적화) */
+        .solution-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 4rem; }
+        .solution-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.06); display: flex; flex-direction: column; transition: transform 0.3s; }
+        .solution-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: #e53e3e; }
+        .solution-content { padding: 3rem 2.5rem; flex: 1; display: flex; flex-direction: column; }
+        .solution-content h3 { font-size: 1.7rem; margin-bottom: 1.5rem; color: #1a202c; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; }
+        .solution-content ul { padding-left: 1.2rem; color: #000000; line-height: 1.8; font-size: 1.05rem; margin-bottom: 1.5rem; font-weight: 500; }
+        .solution-content ul li { margin-bottom: 0.8rem; }
+        .promo-banner { background-color: rgba(221, 107, 32, 0.05); border-radius: 8px; border: 1px solid rgba(221, 107, 32, 0.2); padding: 0.3rem 1.2rem; margin-top: 3.8rem; }
+        .promo-banner h4 { color: #dd6b20; margin-bottom: 0.5rem; font-size: 1.1rem; }
+        
+        /* 6. FAQ 디자인 (내용 글자 선명하게 변경) */
+        .faq-container { max-width: 900px; margin: 0 auto; }
+        details.faq-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.02); overflow: hidden; }
+        details.faq-item summary { padding: 1rem 1.5rem; font-size: 1.15rem; font-weight: bold; background: #f8fafc; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: #1a202c; transition: background 0.3s; }
+        details.faq-item summary:hover { background: #edf2f7; }
+        details.faq-item summary::-webkit-details-marker { display: none; }
+        details.faq-item summary::after { content: '+'; font-size: 1.8rem; color: #2b6cb0; transition: transform 0.3s; font-weight: normal; }
+        details.faq-item[open] summary::after { transform: rotate(45deg); }
+        details.faq-item p { padding: 1rem 1.5rem; margin: 0; color: #000000; line-height: 1.6; font-size: 1.05rem; border-top: 1px solid #e2e8f0; background: #ffffff; font-weight: 500; }
+
+        /* 7. 도입문의 세련된 분리형 UI (버튼 작게, 아이콘 크게) */
+        .contact-section { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; margin-bottom: 3rem; }
+        .contact-card { background: #ffffff; padding: 3.5rem 2rem; text-align: center; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.04); flex: 1; min-width: 300px; max-width: 500px; }
+        .contact-card h2 { font-size: 1.5rem; margin-bottom: 1rem; color: #1a202c; font-weight: 800; }
+        .contact-card p { font-size: 1.1rem; margin-bottom: 2.5rem; color: #000000; min-height: 50px; font-weight: 500; }
+        .btn-kakao { background-color: #FEE500; color: #191919; padding: 0.8rem 1.8rem; font-size: 1.1rem; font-weight: bold; border-radius: 12px; display: inline-flex; align-items: center; gap: 0.6rem; box-shadow: 0 4px 10px rgba(254, 229, 0, 0.3); transition: all 0.3s; justify-content: center; }
+        .btn-blog { background-color: #03C75A; color: #ffffff; padding: 0.8rem 1.8rem; font-size: 1.1rem; font-weight: bold; border-radius: 12px; display: inline-flex; align-items: center; gap: 0.6rem; box-shadow: 0 4px 10px rgba(3, 199, 90, 0.3); transition: all 0.3s; justify-content: center; }
+        .btn-kakao:hover, .btn-blog:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        
+        footer { background: #161b22; border-top: 1px solid #2d3748; padding: 0.8rem 1rem 0.5rem 1rem; margin-top: auto; }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4rem; border-bottom: 1px solid #2d3748; padding-bottom: 0.5rem; }
+        .footer-item { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+        .footer-info p:first-child { color: #a0aec0; font-size: 0.65rem; margin-bottom: 0; text-align: left; }
+        .footer-info p:last-child { color: #fff; font-size: 0.85rem; font-weight: normal; margin-bottom: 0; text-align: left; }
+        .footer-copyright { text-align: center; margin-top: 0.5rem; font-size: 0.75rem; color: #718096; }
+
+        @media (min-width: 768px) {
+            .problem-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+            .solution-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* 모바일 기기 최적화 (반응형 공통) */
+        @media (max-width: 768px) {
+            /* 1. 상단 바 (햄버거 메뉴) */
+            .main-header { justify-content: space-between; padding: 0.75rem 1.5rem; }
+            .menu-icon { display: block !important; }
+            .header-nav { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); flex-direction: column; gap: 0; padding: 0; border-bottom: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+            .header-nav a { padding: 1.2rem 2rem; border-bottom: 1px solid #f1f5f9; text-align: left; }
+            #menu-btn:checked ~ .header-nav { display: flex; }
+
+            /* 2. 비화재보 모바일 가로형 차트 교체 */
+            .v-chart-container { display: none; }
+            .h-chart-container { display: block !important; width: 100%; margin: 2rem auto; background: rgba(20, 26, 38, 0.85); border-radius: 12px; padding: 1.5rem 1.2rem; box-shadow: 0 12px 30px rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.1); }
+            .h-chart-row { display: flex; align-items: center; margin-bottom: 1.2rem; }
+            .h-chart-row:last-child { margin-bottom: 0; }
+            .h-chart-label { width: 55px; color: #90cdf4; font-weight: bold; font-size: 0.9rem; text-align: left; }
+            .h-chart-bar-wrap { flex: 1; height: 32px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; position: relative; margin-left: 0.5rem; }
+            .h-chart-bar { height: 100%; background: linear-gradient(to right, #e53e3e, #f56565); border-radius: 4px 0 0 4px; }
+            .h-chart-text { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); color: #fff; font-size: 0.75rem; font-weight: bold; white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+
+            /* 3. 문제점 텍스트 양쪽 정렬 및 여백 확보 */
+            .problem-card { padding: 1.5rem; }
+            .problem-card p { text-align: justify; word-break: break-all; }
+
+            /* 4. 푸터 2x2 배열 및 간격 최소화 */
+            .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 0.5rem; padding-bottom: 0; }
+            .footer-item { align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <a href="index.html"><img src="logo.png" alt="FERD 로고"></a>
+        <input type="checkbox" id="menu-btn" style="display: none;">
+        <label for="menu-btn" class="menu-icon" style="display: none; font-size: 1.8rem; cursor: pointer; color: #1a202c;">&#9776;</label>
+        <nav class="header-nav">
+            <a href="#status" onclick="document.getElementById('menu-btn').checked=false;">현황</a>
+            <a href="#solution" onclick="document.getElementById('menu-btn').checked=false;">솔루션</a>
+            <a href="#faq" onclick="document.getElementById('menu-btn').checked=false;">FAQ</a>
+            <a href="#contact" onclick="document.getElementById('menu-btn').checked=false;">도입문의</a>
+        </nav>
+    </header>
+
+    <section class="dark-section" id="status">
+        <div class="container" style="padding: 0 2rem;">
+            <h2 class="section-title">비화재보 국내 현황</h2>
+            <p class="text-center">비화재보는 세계적인 현안으로 해결이 절실한 상황입니다.<br> 소방청 통계에 따르면, 건축물에 화재 경보가 발생하면 99% 이상이 비화재보(오작동)입니다.</p>
+            <div class="v-chart-container">
+                <div class="v-chart">
+                    <div class="v-chart-col">
+                        <div class="v-chart-bar" style="height: 77.5%;">
+                            <div class="v-chart-value">50,250건<span class="fire-cases">(화재 110건)</span><span class="rate">오작동 99.8%</span></div>
+                        </div>
+                        <div class="v-chart-label">2025년</div>
+                    </div>
+                    <div class="v-chart-col">
+                        <div class="v-chart-bar" style="height: 84.1%;">
+                            <div class="v-chart-value">54,495건<span class="fire-cases">(화재 128건)</span><span class="rate">오작동 99.8%</span></div>
+                        </div>
+                        <div class="v-chart-label">2024년</div>
+                    </div>
+                    <div class="v-chart-col">
+                        <div class="v-chart-bar" style="height: 81.3%;">
+                            <div class="v-chart-value">52,706건<span class="fire-cases">(화재 161건)</span><span class="rate">오작동 99.7%</span></div>
+                        </div>
+                        <div class="v-chart-label">2023년</div>
+                    </div>
+                    <div class="v-chart-col">
+                        <div class="v-chart-bar" style="height: 74.7%;">
+                            <div class="v-chart-value">48,425건<span class="fire-cases">(화재 159건)</span><span class="rate">오작동 99.7%</span></div>
+                        </div>
+                        <div class="v-chart-label">2022년</div>
+                    </div>
+                    <div class="v-chart-col">
+                        <div class="v-chart-bar" style="height: 100%;">
+                            <div class="v-chart-value">64,831건<span class="fire-cases">(화재 145건)</span><span class="rate">오작동 99.8%</span></div>
+                        </div>
+                        <div class="v-chart-label">2021년</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-chart-container" style="display: none;">
+                <div class="h-chart-row">
+                    <div class="h-chart-label">2025년</div>
+                    <div class="h-chart-bar-wrap">
+                        <div class="h-chart-bar" style="width: 77.5%;"></div>
+                        <div class="h-chart-text">50,250건 (오작동 99.8%)</div>
+                    </div>
+                </div>
+                <div class="h-chart-row">
+                    <div class="h-chart-label">2024년</div>
+                    <div class="h-chart-bar-wrap">
+                        <div class="h-chart-bar" style="width: 84.1%;"></div>
+                        <div class="h-chart-text">54,495건 (오작동 99.8%)</div>
+                    </div>
+                </div>
+                <div class="h-chart-row">
+                    <div class="h-chart-label">2023년</div>
+                    <div class="h-chart-bar-wrap">
+                        <div class="h-chart-bar" style="width: 81.3%;"></div>
+                        <div class="h-chart-text">52,706건 (오작동 99.7%)</div>
+                    </div>
+                </div>
+                <div class="h-chart-row">
+                    <div class="h-chart-label">2022년</div>
+                    <div class="h-chart-bar-wrap">
+                        <div class="h-chart-bar" style="width: 74.7%;"></div>
+                        <div class="h-chart-text">48,425건 (오작동 99.7%)</div>
+                    </div>
+                </div>
+                <div class="h-chart-row">
+                    <div class="h-chart-label">2021년</div>
+                    <div class="h-chart-bar-wrap">
+                        <div class="h-chart-bar" style="width: 100%;"></div>
+                        <div class="h-chart-text">64,831건 (오작동 99.8%)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" style="padding-top: 3rem; padding-bottom: 2rem;">
+        <h2 class="section-title">비화재보의 치명적 문제점</h2>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <img src="problem1.png" alt="초기 신속한 대응 불가" style="width: 100%; height: auto; max-height: 350px; object-fit: contain; border-radius: 8px; margin-bottom: 1.5rem; display: block;">
+                <h3>🚨 신속한 초기 대응 불가</h3>
+                <p>화재수신기가 작동하더라도 <strong>물리적인 거리로 인해 사무실이나 외부에서는 즉각적인 인지</strong>가 불가능합니다.<br>빗발치는 문의 전화 속에서 <strong>관리자가 수신기를 직접 확인</strong>한 후 현장으로 출동해야 하므로 초기 대응 <strong>골든타임을 낭비</strong>하게 됩니다.<br><strong>원격 감시</strong>를 통해 주경종 작동 시 이를 <strong>신속히 인지</strong>하고 사전에 대응 준비를 할 수 있어야 합니다.</p>
+            </div>
+            <div class="problem-card">
+                <img src="problem2.png" alt="안전불감증 유발" style="width: 100%; height: auto; max-height: 350px; object-fit: contain; border-radius: 8px; margin-bottom: 1.5rem; display: block;">
+                <h3>🐺 '양치기 소년' 현상</h3>
+                <p>잦은 비화재보(오작동)로 인해 근무자와 거주자들은 경보가 울려도 <strong>"또 오작동이겠지"</strong>라며 대피하지 않는 치명적인 <strong>안전불감증</strong>에 노출되어 있습니다.<br><strong>수신기 원격 제어</strong>를 통해 비화재보시에는 <strong>경보를 신속히 끄고</strong> 오작동 상황을, 화재시에는 화재 상황을 신속히 <strong>현장 인원들에게 공유</strong>하는 시스템이 필요합니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="solution" style="padding-top: 5rem;">
+        <h2 class="section-title">현장에 딱 맞는 셉(SEB) 3대 솔루션</h2>
+        <p class="text-center" style="font-size: 1.15rem; font-weight: bold; margin-bottom: 3rem;">
+            비화재보는 완벽히 제거하기 어려운 기술적 한계를 가지고 있습니다.<br>퍼드(FERD)는 이를 전제로, <span class="highlight">합법적인 수신기 원격 제어 기술인 셉(SEB) 시스템</span>으로 비화재보를 스마트하게 대응합니다.
+        </p>
+
+        <div class="solution-grid">
+            <article class="solution-card">
+                <img src="공유형.PNG" alt="SEB 공유형" class="solution-img">
+                <div class="solution-content">
+                    <h3>① SEB-R, P (공유형)</h3>
+                    <ul>
+                        <li><strong>SMS 발송:</strong> 주경종 작동시 "작동 위치 + 원격 접속 URL" 즉시 전송</li>
+                        <li><strong>수신기 감시·제어:</strong> URL 클릭 시 셉시스템 접속 후 원격 감시·제어</li>
+                        <li><strong>피드백 루프:</strong> 실시간 화재 및 오작동 SMS 전파</li>
+                    </ul>
+                    <a href="https://blog.naver.com/ferd1229/224324297559" target="_blank" class="blog-link">👉 설치 사례 보기(작동 영상 포함)</a>
+                </div>
+            </article>
+
+            <article class="solution-card">
+                <img src="관리자용.PNG" alt="SEB 관리자용" class="solution-img">
+                <div class="solution-content">
+                    <h3>② SEB-RD (관리자용)</h3>
+                    <ul>
+                        <li><strong>SMS 발송:</strong> 주경종 작동시 "주경종 작동 + 원격 접속 URL" 즉시 전송</li>
+                        <li><strong>수신기 감시·제어:</strong> URL 클릭 시 현장 수신기 접속 후 원격 감시·제어</li>
+                        <li><strong>원격 제어:</strong> 윈도우 기반 R형 수신기의 마우스를 내 스마트폰에서 제어</li>
+                    </ul>
+                    <a href="https://blog.naver.com/ferd1229/224330609024" target="_blank" class="blog-link">👉 설치 사례 보기(작동 영상 포함)</a>
+                </div>
+            </article>
+
+            <article class="solution-card">
+                <img src="기본형.PNG" alt="SEB 기본형" class="solution-img">
+                <div class="solution-content">
+                    <h3>③ SEB-IO (기본형)</h3>
+                    <ul>
+                        <li><strong>초기 인지 알림:</strong> 주경종 작동시 "주경종 작동" SMS 발송</li>
+                        <li><strong>완벽한 보호:</strong> 수신기를 100% 보호하는 '포토커플러' 절연 방식 적용</li>
+                        <li><strong>범용성:</strong> P형, R형 구분 없이 가장 합리적인 비용으로 구축 가능</li>
+                    </ul>
+                    <a href="https://blog.naver.com/ferd1229/224336108337" target="_blank" class="blog-link">👉 설치 사례 보기(작동 영상 포함)</a>
+                    <div class="promo-banner">
+                        <h4>🎁 SEB-IO 무상 도입 혜택</h4>
+                        <p>소방시설 법정 자체점검 또는 안전관리대행 계약 시, <strong>계약 기간 내 전액 무상 지원</strong>해 드립니다.</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="container" id="faq" style="padding-top: 3rem; padding-bottom: 5rem;">
+        <h2 class="section-title">자주 묻는 질문 (FAQ)</h2>
+        <div class="faq-container">
+            <details class="faq-item">
+                <summary>Q1. 셉(SEB) 시스템은 소방법상 불법 개조가 아닌가요?</summary>
+                <p>네, 100% 합법입니다.<br>퍼드의 SEB R, P시스템은 수신기 내부 회로를 조작하거나 선을 브릿지하는 불법 개조를 절대 하지 않습니다.<br>고화질 웹캠으로 화면을 '보고', IoT 스위치봇을 물리적으로 부착해 스위치를 '누르는' 완벽한 비침습적 외부 제어 방식이므로 소방법에 전혀 저촉되지 않습니다.<br>그리고 SEB RD, IO도 수신기와 연결하는 접점이 없어 수신기에 유해한 영향을 줄 수 없는 구조입니다.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Q2. P형, R형 등 수신기 종류나 제조사에 상관없이 적용되나요?</summary>
+                <p>네, 모든 기종에 호환 가능합니다.<br>화재 감지 및 제어 방식이 수신기의 브랜드나 통신 프로토콜에 의존하지 않고 '물리적 제어'와 '디스플레이 인식'을 기반으로 작동하므로 구형 P형부터 최신 R형 수신기까지 모두 설치할 수 있습니다.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Q3. 방재실에 인터넷(와이파이)이 없는데 설치가 가능한가요?</summary>
+                <p>가능합니다.<br>인터넷 환경이 구축되어 있지 않은 지하실이나 방재실의 경우, 퍼드에서 자체적으로 통신사 LTE 라우터(또는 Cat.M1 모듈)를 함께 구성하여 독립적인 통신망으로 완벽하게 시스템을 운영해 드립니다.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Q4. 설치하는데 시간이 얼마나 걸리나요? 운영 중인 건물도 가능한가요?</summary>
+                <p>건물 운영 중에도 전혀 문제없이 설치가 가능합니다.<br>수신기 전원을 내리거나 복잡한 배선 공사가 없기 때문에, 현장 환경에 따라 다르지만 보통 1~2시간 내외로 신속하게 설치 및 세팅을 완료하고 시스템 설명과 인수인계를 진행합니다.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Q5. 설치 비용은 얼마나 되나요? 월사용료가 따로 발생하나요?</summary>
+                <p>시스템 구축비와 정기 사용료로 구성됩니다.<br>최초 설치시 현장에 설치하는 하드웨어와 시스템 셋팅 등 일회성 구축비와 서버 사용료로 구성되며, 월 또는 연간 사용료 중 유연하게 선택하실 수 있습니다.<br>도입 문의를 남겨주시면 현장에 가장 합리적인 맞춤형 견적을 신속히 안내해 드립니다.</p>
+            </details>
+        </div>
+    </section>
+
+    <section class="container" id="contact" style="padding-top: 0; padding-bottom: 4rem;">
+        <div class="contact-section">
+            <div class="contact-card">
+                <h2>현장 도입 문의</h2>
+                <p>비화재보의 스트레스, 퍼드의 셉(SEB) 시스템이<br>현장에 딱 맞는 해결책을 제안해 드립니다.</p>
+                <a href="http://pf.kakao.com/_exdjxcK" target="_blank" class="btn-kakao">
+                    <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 아이콘" style="width: 32px; height: 32px;">
+                    카카오톡 1:1 상담하기
+                </a>
+            </div>
+            
+            <div class="contact-card">
+                <h2>소방 관련 정보 확인하기</h2>
+                <p>퍼드 연구소 블로그에서<br>궁금한 소방 관련 사항을 검색해 보세요!</p>
+                <a href="https://blog.naver.com/ferd1229" target="_blank" class="btn-blog">
+                    <img src="naver-blog-icon.png" alt="네이버 블로그" style="width: 32px; height: 32px; border-radius: 6px; background-color: #fff; padding: 2px;">
+                    퍼드 연구소 블로그 방문
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-item"><div class="footer-info"><p>COMPANY</p><p>퍼드 (FERD)</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>ADDRESS</p><p>대구 수성구 청수로 3층</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>CONTACT(문자 가능)</p><p>0507-1353-5682</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>EMAIL</p><p>ferd@ferd.co.kr</p></div></div>
+        </div>
+        <div class="footer-copyright">&copy; 2021 FERD. ALL RIGHTS RESERVED.</div>
+    </footer>
+</body>
+</html>
