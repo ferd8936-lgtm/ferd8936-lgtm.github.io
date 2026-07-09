@@ -102,6 +102,17 @@
         </div>
     </footer>
 
+    <div id="pwdModal" class="stats-modal">
+        <div class="stats-content" style="max-width: 320px; padding: 2.5rem 1.5rem;">
+            <h2 style="font-size: 1.4rem; margin-bottom: 1.5rem;">🔒 관리자 인증</h2>
+            <input type="password" id="adminPwd" placeholder="비밀번호 입력" style="width: 100%; padding: 0.8rem; margin-bottom: 1.5rem; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 1.1rem; text-align: center;" onkeyup="if(window.event.keyCode==13){verifyPwd()}">
+            <div style="display: flex; gap: 0.5rem;">
+                <button onclick="document.getElementById('pwdModal').style.display='none'" style="flex: 1; padding: 0.8rem; background: #cbd5e0; color: #1a202c; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem;">취소</button>
+                <button onclick="verifyPwd()" style="flex: 1; padding: 0.8rem; background: #e53e3e; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem;">확인</button>
+            </div>
+        </div>
+    </div>
+
     <div id="statsModal" class="stats-modal">
         <div class="stats-content">
             <h2>📊 퍼드(FERD) 페이지 조회수</h2>
@@ -170,12 +181,18 @@
             db.ref('views/days/' + dateString).set(firebase.database.ServerValue.increment(1));
         };
 
-        // 3. 관리자 비밀번호 확인 로직
+        // 3. 관리자 비밀번호 확인 로직 (모바일 호환성 강화)
         function checkAdminPassword() {
-            const pwd = prompt("비밀번호를 입력하세요.");
+            document.getElementById('adminPwd').value = ''; // 기존 입력 초기화
+            document.getElementById('pwdModal').style.display = 'flex';
+        }
+
+        function verifyPwd() {
+            const pwd = document.getElementById('adminPwd').value;
             if (pwd === "7102") {
+                document.getElementById('pwdModal').style.display = 'none';
                 showStats();
-            } else if (pwd !== null) {
+            } else {
                 alert("비밀번호가 일치하지 않습니다.");
             }
         }
