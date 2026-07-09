@@ -51,7 +51,7 @@
             .hero-box { padding: 2rem 1.5rem; min-width: 100%; }
             .footer-grid { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
             .footer-grid .footer-item:first-child { flex-direction: column !important; align-items: flex-start !important; gap: 0.2rem !important; }
-            .footer-grid .footer-item img { height: 50px !important; margin: 0 !important; margin-left: -6px !important; }
+            .footer-grid .footer-item img { height: 50px !important; margin: 0 !important; margin-left: -18px !important; }
         }
 
         /* 관리자 조회수 통계 팝업 디자인 */
@@ -116,7 +116,7 @@
     <div id="statsModal" class="stats-modal">
         <div class="stats-content">
             <h2>📊 퍼드(FERD) 페이지 조회수</h2>
-            <p style="font-size: 0.95rem; color: #718096; margin-bottom: 1.5rem; word-break: keep-all;">※ 현재 깃허브(GitHub) 서버 특성상 임시 데이터가 표시됩니다. 실제 데이터는 외부 트래킹 서버 연동이 필요합니다.</p>
+            <p style="font-size: 0.95rem; color: #718096; margin-bottom: 1.5rem; word-break: keep-all;">※ 파이어베이스와 연동합니다.</p>
             <table class="stats-table">
                 <thead>
                     <tr>
@@ -143,11 +143,11 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
 
     <script>
-        // 1. 파이어베이스 설정 (발급받은 본인의 config 정보로 반드시 교체하세요!)
+        /// 1. 파이어베이스 설정 (발급받은 본인의 config 정보로 반드시 교체하세요!)
         const firebaseConfig = {
             apiKey: "AIzaSyBlpD8zy5x0VO3lAIpnJWuz_jMFS_rIKBo",
             authDomain: "ferd-web.firebaseapp.com",
-            databaseURL: "https://ferd-web-default-rtdb.firebaseio.com",
+            databaseURL: "https://ferd-web-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "ferd-web",
             storageBucket: "ferd-web.firebasestorage.app",
             messagingSenderId: "509355840168",
@@ -214,7 +214,13 @@
                 document.getElementById('statsModal').style.display = 'flex';
             }).catch((error) => {
                 console.error("통계 오류:", error);
-                alert("통계 데이터를 불러오는데 실패했습니다.");
+                // DB 권한 오류가 나더라도 표 창은 무조건 화면에 띄웁니다.
+                document.getElementById('dailyViews').innerText = "DB 점검요망";
+                document.getElementById('weeklyViews').innerText = "DB 점검요망";
+                document.getElementById('monthlyViews').innerText = "DB 점검요망";
+                document.getElementById('totalViews').innerText = "DB 점검요망";
+                document.getElementById('statsModal').style.display = 'flex';
+                alert("통계 데이터를 불러오지 못했습니다. 파이어베이스 Realtime Database가 생성되어 있고 규칙(Rules)이 true로 설정되어 있는지 확인해 주세요.");
             });
         }
     </script>
