@@ -51,14 +51,25 @@
             .hero-box { padding: 2rem 1.5rem; min-width: 100%; }
             .footer-grid { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
             .footer-grid .footer-item:first-child { flex-direction: column !important; align-items: flex-start !important; gap: 0.2rem !important; }
-            .footer-grid .footer-item img { height: 50px !important; margin: 0 !important; }
+            .footer-grid .footer-item img { height: 50px !important; margin: 0 !important; margin-left: -6px !important; }
         }
+
+        /* 관리자 조회수 통계 팝업 디자인 */
+        .stats-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
+        .stats-content { background: #ffffff; padding: 2.5rem 1.5rem; border-radius: 12px; width: 90%; max-width: 600px; text-align: center; color: #1a202c; border-top: 5px solid #e53e3e; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .stats-content h2 { color: #1a202c; margin-bottom: 1.5rem; font-size: 1.5rem; }
+        .stats-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        .stats-table th, .stats-table td { border: 1px solid #cbd5e0; padding: 0.8rem; text-align: center; font-size: 1.05rem; }
+        .stats-table th { background: #f8fafc; font-weight: bold; color: #1a202c; }
+        .stats-table td { color: #e53e3e; font-weight: bold; }
+        .stats-close { padding: 0.6rem 2rem; background: #e53e3e; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: background 0.2s; }
+        .stats-close:hover { background: #c53030; }
     </style>
 </head>
 <body>
     <section class="hero-container">
         <div class="hero-content">
-            <h1>퍼드(FERD), 현장을 연결하는 안전관리 IT 플랫폼</h1>
+            <h1>퍼드(FERD) 안전관리 IT 플랫폼</h1>
 
             <div class="hero-boxes">
                 <div class="hero-box">
@@ -76,7 +87,7 @@
 
             <div style="margin-top: 3.5rem; display: flex; justify-content: center;">
                 <a href="qa-search.html" class="btn btn-outline" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.8rem; padding: 0.6rem 2.5rem; font-size: 1.05rem;">
-                    소방법, 산안법 질의회신 해설 검색
+                    소방법, 산안법 질의회신 통합 검색
                 </a>
             </div>
         </div>
@@ -84,11 +95,111 @@
 
     <footer>
         <div class="footer-grid">
-            <div class="footer-item" style="flex-direction: row; align-items: center; gap: 1.5rem;"><img src="logo1.png" alt="FERD 로고" style="height: 70px;"><div class="footer-info"><p>COMPANY</p><p>퍼드 (FERD)</p></div></div>
-            <div class="footer-item"><div class="footer-info"><p>ADDRESS</p><p>대구 수성구 청수로 3층</p></div></div>
-            <div class="footer-item"><div class="footer-info"><p>CONTACT(문자 가능)</p><p>0507-1353-5682</p></div></div>
-            <div class="footer-item"><div class="footer-info"><p>EMAIL</p><p>ferd@ferd.co.kr</p></div></div>
+            <div class="footer-item" style="flex-direction: row; align-items: center; gap: 1.5rem;"><img src="logo1.png" alt="FERD 로고" style="height: 70px; cursor: pointer;" onclick="checkAdminPassword()"><div class="footer-info"><p>company</p><p>퍼드 (FERD)</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>address</p><p>대구 수성구 청수로 3층</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>contact</p><p>0507-1353-5682</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>email</p><p>ferd@ferd.co.kr</p></div></div>
         </div>
     </footer>
+
+    <div id="statsModal" class="stats-modal">
+        <div class="stats-content">
+            <h2>📊 퍼드(FERD) 페이지 조회수</h2>
+            <p style="font-size: 0.95rem; color: #718096; margin-bottom: 1.5rem; word-break: keep-all;">※ 현재 깃허브(GitHub) 서버 특성상 임시 데이터가 표시됩니다. 실제 데이터는 외부 트래킹 서버 연동이 필요합니다.</p>
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>일간</th>
+                        <th>주간</th>
+                        <th>월간</th>
+                        <th>총 누적</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="dailyViews">--</td>
+                        <td id="weeklyViews">--</td>
+                        <td id="monthlyViews">--</td>
+                        <td id="totalViews">--</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="stats-close" onclick="document.getElementById('statsModal').style.display='none'">닫기</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
+
+    <script>
+        // 1. 파이어베이스 설정 (발급받은 본인의 config 정보로 반드시 교체하세요!)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlpD8zy5x0VO3lAIpnJWuz_jMFS_rIKBo",
+            authDomain: "ferd-web.firebaseapp.com",
+            databaseURL: "https://ferd-web-default-rtdb.firebaseio.com",
+            projectId: "ferd-web",
+            storageBucket: "ferd-web.firebasestorage.app",
+            messagingSenderId: "509355840168",
+            appId: "1:509355840168:web:7957fd4cb28e3ad7baa89d"
+        };
+
+        // 파이어베이스 초기화
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // 2. 접속 시 조회수 증가 로직
+        const now = new Date();
+        const yearMonth = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0');
+        const dateString = yearMonth + "-" + String(now.getDate()).padStart(2, '0');
+        
+        // 주간 계산 함수
+        function getWeek() {
+            const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+            d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            return d.getUTCFullYear() + "-W" + weekNo;
+        }
+        const weekString = getWeek();
+
+        // 페이지가 열리면 자동으로 파이어베이스 DB의 해당 날짜 조회수를 +1 합니다.
+        window.onload = function() {
+            db.ref('views/total').set(firebase.database.ServerValue.increment(1));
+            db.ref('views/months/' + yearMonth).set(firebase.database.ServerValue.increment(1));
+            db.ref('views/weeks/' + weekString).set(firebase.database.ServerValue.increment(1));
+            db.ref('views/days/' + dateString).set(firebase.database.ServerValue.increment(1));
+        };
+
+        // 3. 관리자 비밀번호 확인 로직
+        function checkAdminPassword() {
+            const pwd = prompt("비밀번호를 입력하세요.");
+            if (pwd === "7102") {
+                showStats();
+            } else if (pwd !== null) {
+                alert("비밀번호가 일치하지 않습니다.");
+            }
+        }
+
+        // 4. 통계 팝업에 파이어베이스 실제 데이터 불러오기
+        function showStats() {
+            db.ref('views').once('value').then((snapshot) => {
+                const data = snapshot.val() || {};
+                const total = data.total || 0;
+                const monthly = (data.months && data.months[yearMonth]) ? data.months[yearMonth] : 0;
+                const weekly = (data.weeks && data.weeks[weekString]) ? data.weeks[weekString] : 0;
+                const daily = (data.days && data.days[dateString]) ? data.days[dateString] : 0;
+
+                document.getElementById('dailyViews').innerText = daily + "건";
+                document.getElementById('weeklyViews').innerText = weekly + "건";
+                document.getElementById('monthlyViews').innerText = monthly + "건";
+                document.getElementById('totalViews').innerText = total + "건";
+                
+                document.getElementById('statsModal').style.display = 'flex';
+            }).catch((error) => {
+                console.error("통계 오류:", error);
+                alert("통계 데이터를 불러오는데 실패했습니다.");
+            });
+        }
+    </script>
 </body>
 </html>
