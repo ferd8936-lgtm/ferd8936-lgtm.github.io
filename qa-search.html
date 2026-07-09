@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퍼드(FERD) - 소방법·산안법 통합 검색</title>
+    <meta name="description" content="퍼드 연구소의 소방법 및 산업안전보건법 질의회신 통합 검색 시스템">
+    <style>
+        @font-face {
+            font-family: 'NexonLv2Gothic';
+            src: url('NexonLv2Gothic.ttf') format('truetype');
+            font-weight: normal; font-style: normal;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'NexonLv2Gothic', sans-serif; line-height: 1.6; color: #000000; background-color: #ffffff; display: flex; flex-direction: column; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem 2rem; flex: 1; width: 100%; }
+        .page-title { display: flex; align-items: center; justify-content: center; gap: 0.8rem; font-size: 1.4rem; margin-bottom: 2rem; color: #1a202c; font-weight: 700; }
+        .page-title img { height: 65px; vertical-align: middle; }
+        
+        .search-box { position: relative; max-width: 600px; margin: 0 auto 3rem auto; }
+        .search-box input { width: 100%; padding: 0.9rem 3.5rem 0.9rem 1.5rem; border: 1px solid #cbd5e0; border-radius: 8px; font-size: 0.9rem; font-family: 'NexonLv2Gothic', sans-serif; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+        .search-box input:focus { border-color: #e53e3e; }
+        .search-box button { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; cursor: pointer; padding: 0.5rem; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s; }
+        .search-box button:hover { opacity: 0.7; }
+        .search-box button svg { width: 26px; height: 26px; fill: #e53e3e; }
+
+        .result-count { font-size: 1.1rem; margin-bottom: 1rem; color: #4a5568; }
+        .result-list { display: flex; flex-direction: column; gap: 1.5rem; }
+        
+        .result-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .result-category { display: inline-block; background: #edf2f7; color: #2b6cb0; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.9rem; font-weight: bold; margin-bottom: 1rem; }
+        .result-title { font-size: 1.3rem; color: #1a202c; font-weight: bold; margin-bottom: 1rem; }
+        .result-text { font-size: 1.05rem; color: #2d3748; margin-bottom: 1rem; white-space: pre-wrap; line-height: 1.7; }
+        .result-text strong { color: #e53e3e; }
+        .result-link { display: inline-flex; align-items: center; gap: 0.5rem; color: #e53e3e; font-weight: bold; text-decoration: underline; margin-top: 0.5rem; }
+        .result-link:hover { color: #c53030; }
+
+        .no-result { text-align: center; padding: 3rem; color: #718096; font-size: 1.1rem; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; }
+
+        /* 푸터 영역 */
+        footer { background: #161b22; border-top: 1px solid #2d3748; padding: 0.8rem 1rem 0.5rem 1rem; margin-top: auto; }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4rem; border-bottom: 1px solid #2d3748; padding-bottom: 0.5rem; }
+        .footer-item { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+        .footer-info p:first-child { color: #a0aec0; font-size: 0.65rem; margin-bottom: 0; text-align: left; }
+        .footer-info p:last-child { color: #fff; font-size: 0.85rem; font-weight: normal; margin-bottom: 0; text-align: left; }
+        .footer-copyright { text-align: center; margin-top: 0.5rem; font-size: 0.75rem; color: #718096; }
+
+        @media (max-width: 768px) {
+            .page-title { font-size: 1.3rem; }
+            .page-title img { height: 45px; }
+            .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 0.5rem; padding-bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+    <section class="container">
+        <h2 class="page-title">
+            <a href="index.html"><img src="logo.png" alt="FERD 로고"></a>
+            소방법, 산안법 질의회신 통합 검색
+        </h2>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="궁금한 키워드를 입력하세요(예: 완비증명서 발급, 피난구유도등 설치기준 등)" onkeyup="if(window.event.keyCode==13){doSearch()}">
+            <button type="button" onclick="doSearch()" aria-label="검색">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </button>
+        </div>
+
+        <div id="resultCount" class="result-count"></div>
+        <div id="resultContainer" class="result-list">
+            </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-item"><div class="footer-info"><p>COMPANY</p><p>퍼드 (FERD)</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>ADDRESS</p><p>대구 수성구 청수로 3층</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>CONTACT</p><p>0507-1353-5682</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>EMAIL</p><p>ferd@ferd.co.kr</p></div></div>
+        </div>
+        <div class="footer-copyright">&copy; 2021 FERD. ALL RIGHTS RESERVED.</div>
+    </footer>
+
+    <script src="qa-data.js"></script>
+    <script>
+        function doSearch() {
+            const keyword = document.getElementById("searchInput").value.trim().toLowerCase();
+            const container = document.getElementById("resultContainer");
+            const countDiv = document.getElementById("resultCount");
+            
+            container.innerHTML = ""; // 기존 결과 초기화
+
+            if (keyword === "") {
+                countDiv.innerHTML = "";
+                container.innerHTML = "<div class='no-result'>검색어를 입력해 주세요.</div>";
+                return;
+            }
+
+            // 데이터 필터링 (제목, 질문, 답변 내용에 키워드가 포함되어 있는지 확인)
+            const results = qaData.filter(item => 
+                item.title.toLowerCase().includes(keyword) || 
+                item.question.toLowerCase().includes(keyword) || 
+                item.answer.toLowerCase().includes(keyword)
+            );
+
+            countDiv.innerHTML = `총 <strong>${results.length}</strong>건의 질의회신이 검색되었습니다.`;
+
+            if (results.length === 0) {
+                container.innerHTML = "<div class='no-result'>검색 결과가 없습니다. 다른 키워드로 검색해 보세요.</div>";
+                return;
+            }
+
+            // 결과 화면 렌더링
+            results.forEach(item => {
+                let linkHtml = "";
+                if (item.link && item.link.trim() !== "") {
+                    linkHtml = `<a href="${item.link}" target="_blank" class="result-link">👉 관련 전문가 해설 보기</a>`;
+                }
+
+                const cardHtml = `
+                    <div class="result-card">
+                        <span class="result-category">[${item.category}]</span>
+                        <h3 class="result-title">${item.title}</h3>
+                        <div class="result-text"><strong>Q.</strong> ${item.question}</div>
+                        <div class="result-text" style="background: #f8fafc; padding: 1rem; border-radius: 8px;"><strong>A.</strong> ${item.answer}</div>
+                        ${linkHtml}
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        }
+    </script>
+</body>
+</html>
