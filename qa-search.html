@@ -62,6 +62,17 @@
             .search-box input::placeholder { font-size: 1.05rem; }
             .result-title { font-size: 1.2rem; }
         }
+
+        /* 관리자 조회수 통계 팝업 디자인 */
+        .stats-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
+        .stats-content { background: #ffffff; padding: 2.5rem 1.5rem; border-radius: 12px; width: 90%; max-width: 600px; text-align: center; color: #1a202c; border-top: 5px solid #e53e3e; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .stats-content h2 { color: #1a202c; margin-bottom: 1.5rem; font-size: 1.5rem; }
+        .stats-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        .stats-table th, .stats-table td { border: 1px solid #cbd5e0; padding: 0.8rem; text-align: center; font-size: 1.05rem; }
+        .stats-table th { background: #f8fafc; font-weight: bold; color: #1a202c; }
+        .stats-table td { color: #e53e3e; font-weight: bold; }
+        .stats-close { padding: 0.6rem 2rem; background: #e53e3e; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: background 0.2s; }
+        .stats-close:hover { background: #c53030; }
     </style>
 </head>
 <body>
@@ -99,13 +110,127 @@
 
     <footer>
         <div class="footer-grid">
-            <div class="footer-item"><div class="footer-info"><p>COMPANY</p><p>퍼드 (FERD)</p></div></div>
+            <div class="footer-item" style="cursor: pointer;" onclick="checkAdminPassword()"><div class="footer-info"><p>COMPANY</p><p>퍼드 (FERD)</p></div></div>
             <div class="footer-item"><div class="footer-info"><p>ADDRESS</p><p>대구 수성구 청수로 3층</p></div></div>
             <div class="footer-item"><div class="footer-info"><p>CONTACT</p><p>0507-1353-5682</p></div></div>
             <div class="footer-item"><div class="footer-info"><p>EMAIL</p><p>ferd@ferd.co.kr</p></div></div>
         </div>
         <div class="footer-copyright">&copy; 2021 FERD. ALL RIGHTS RESERVED.</div>
     </footer>
+
+    <div id="pwdModal" class="stats-modal">
+        <div class="stats-content" style="max-width: 320px; padding: 2.5rem 1.5rem;">
+            <h2 style="font-size: 1.4rem; margin-bottom: 1.5rem;">🔒 관리자 인증</h2>
+            <input type="password" id="adminPwd" placeholder="비밀번호 입력" style="width: 100%; padding: 0.8rem; margin-bottom: 1.5rem; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 1.1rem; text-align: center;" onkeyup="if(window.event.keyCode==13){verifyPwd()}">
+            <div style="display: flex; gap: 0.5rem;">
+                <button onclick="document.getElementById('pwdModal').style.display='none'" style="flex: 1; padding: 0.8rem; background: #cbd5e0; color: #1a202c; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem;">취소</button>
+                <button onclick="verifyPwd()" style="flex: 1; padding: 0.8rem; background: #e53e3e; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem;">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="statsModal" class="stats-modal">
+        <div class="stats-content">
+            <h2>📊 퍼드(FERD) 페이지 조회수</h2>
+            <p style="font-size: 0.95rem; color: #718096; margin-bottom: 1.5rem; word-break: keep-all;">※ 파이어베이스와 연동합니다.</p>
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>일간</th>
+                        <th>주간</th>
+                        <th>월간</th>
+                        <th>총 누적</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="dailyViews">--</td>
+                        <td id="weeklyViews">--</td>
+                        <td id="monthlyViews">--</td>
+                        <td id="totalViews">--</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="stats-close" onclick="document.getElementById('statsModal').style.display='none'">닫기</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlpD8zy5x0VO3lAIpnJWuz_jMFS_rIKBo",
+            authDomain: "ferd-web.firebaseapp.com",
+            databaseURL: "https://ferd-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ferd-web",
+            storageBucket: "ferd-web.firebasestorage.app",
+            messagingSenderId: "509355840168",
+            appId: "1:509355840168:web:7957fd4cb28e3ad7baa89d"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        const now = new Date();
+        const yearMonth = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0');
+        const dateString = yearMonth + "-" + String(now.getDate()).padStart(2, '0');
+        
+        function getWeek() {
+            const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+            d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            return d.getUTCFullYear() + "-W" + weekNo;
+        }
+        const weekString = getWeek();
+
+        window.onload = function() {
+            db.ref('qa_views/total').set(firebase.database.ServerValue.increment(1));
+            db.ref('qa_views/months/' + yearMonth).set(firebase.database.ServerValue.increment(1));
+            db.ref('qa_views/weeks/' + weekString).set(firebase.database.ServerValue.increment(1));
+            db.ref('qa_views/days/' + dateString).set(firebase.database.ServerValue.increment(1));
+        };
+
+        function checkAdminPassword() {
+            document.getElementById('adminPwd').value = '';
+            document.getElementById('pwdModal').style.display = 'flex';
+        }
+
+        function verifyPwd() {
+            const pwd = document.getElementById('adminPwd').value;
+            if (pwd === "7102") {
+                document.getElementById('pwdModal').style.display = 'none';
+                showStats();
+            } else {
+                alert("비밀번호가 일치하지 않습니다.");
+            }
+        }
+
+        function showStats() {
+            db.ref('qa_views').once('value').then((snapshot) => {
+                const data = snapshot.val() || {};
+                const total = data.total || 0;
+                const monthly = (data.months && data.months[yearMonth]) ? data.months[yearMonth] : 0;
+                const weekly = (data.weeks && data.weeks[weekString]) ? data.weeks[weekString] : 0;
+                const daily = (data.days && data.days[dateString]) ? data.days[dateString] : 0;
+
+                document.getElementById('dailyViews').innerText = daily + "건";
+                document.getElementById('weeklyViews').innerText = weekly + "건";
+                document.getElementById('monthlyViews').innerText = monthly + "건";
+                document.getElementById('totalViews').innerText = total + "건";
+                
+                document.getElementById('statsModal').style.display = 'flex';
+            }).catch((error) => {
+                console.error("통계 오류:", error);
+                document.getElementById('dailyViews').innerText = "DB 점검요망";
+                document.getElementById('weeklyViews').innerText = "DB 점검요망";
+                document.getElementById('monthlyViews').innerText = "DB 점검요망";
+                document.getElementById('totalViews').innerText = "DB 점검요망";
+                document.getElementById('statsModal').style.display = 'flex';
+                alert("통계 데이터를 불러오지 못했습니다. 파이어베이스 규칙 설정을 확인해 주세요.");
+            });
+        }
+    </script>
 
     <script src="qa-data.js"></script>
     <script>
