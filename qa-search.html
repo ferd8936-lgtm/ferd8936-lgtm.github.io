@@ -39,6 +39,14 @@
 
         .no-result { text-align: center; padding: 3rem; color: #718096; font-size: 1.1rem; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; }
 
+        .promo-banners { display: flex; flex-direction: column; gap: 0.8rem; width: 100%; max-width: 600px; margin: 3rem auto 0 auto; }
+        .promo-banner-link { display: flex; flex-direction: column; align-items: flex-start; text-align: left; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid #cbd5e0; background: #ffffff; color: #1a202c; transition: all 0.2s; }
+        .promo-banner-link:hover { border-color: #e53e3e; background: #f8fafc; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .banner-title { font-size: 1.05rem; font-weight: bold; color: #1a202c; margin-bottom: 0.3rem; display: block; }
+        .banner-desc { font-size: 0.85rem; color: #4a5568; font-weight: normal; line-height: 1.4; word-break: keep-all; display: block; }
+
+        /* 푸터 영역 */
+
         /* 푸터 영역 */
         footer { background: #161b22; border-top: 1px solid #2d3748; padding: 0.8rem 1rem 0.5rem 1rem; margin-top: auto; }
         .footer-grid { max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4rem; border-bottom: 1px solid #2d3748; padding-bottom: 0.5rem; }
@@ -48,9 +56,10 @@
         .footer-copyright { text-align: center; margin-top: 0.5rem; font-size: 0.75rem; color: #718096; }
 
         @media (max-width: 768px) {
-            .page-title { font-size: 1.3rem; }
+            .page-title { font-size: 1.2rem; }
             .page-title img { height: 45px; }
-            .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 0.5rem; padding-bottom: 0; }
+            .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 0.5rem; padding-bottom: 1.2rem; }
+            .search-box input::placeholder { font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -62,7 +71,7 @@
         </h2>
         
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="궁금한 키워드를 입력하세요(예: 완비증명서 발급, 피난구유도등 설치기준 등)" onkeyup="if(window.event.keyCode==13){doSearch()}">
+            <input type="text" id="searchInput" placeholder="키워드로 검색하세요(예: 알람밸브, 주펌프, 피난구유도등, 완비 등)" onkeyup="if(window.event.keyCode==13){doSearch()}">
             <button type="button" onclick="doSearch()" aria-label="검색">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
             </button>
@@ -71,6 +80,17 @@
         <div id="resultCount" class="result-count"></div>
         <div id="resultContainer" class="result-list">
             </div>
+        
+        <div class="promo-banners">
+            <a href="seb-system.html" class="promo-banner-link">
+                <span class="banner-title">👉 셉(SEB) 시스템 알아보기</span>
+                <span class="banner-desc">App 설치 없이 문자로 끝내는 합법적인 화재수신기 무인 원격제어 솔루션</span>
+            </a>
+            <a href="#" class="promo-banner-link" onclick="alert('준비 중입니다')">
+                <span class="banner-title">👉 세이프링크 알아보기</span>
+                <span class="banner-desc">현장에 부착된 QR, NFC 태그를 통해 종사자 의견청취, 작업중지, 아차사고 접수·관리</span>
+            </a>
+        </div>
     </section>
 
     <footer>
