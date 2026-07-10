@@ -16,7 +16,7 @@
         a { text-decoration: none; color: inherit; }
         
         .container { max-width: 900px; margin: 0 auto; padding: 2rem 2rem; flex: 1; width: 100%; }
-        .page-title { display: flex; align-items: center; justify-content: center; gap: 0.8rem; font-size: 1.4rem; margin-bottom: 2rem; color: #1a202c; font-weight: 700; }
+        .page-title { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; font-size: 1.4rem; margin-bottom: 0.6rem; color: #1a202c; font-weight: 700; text-align: center; }
         .page-title img { height: 65px; vertical-align: middle; }
         
         .search-box { position: relative; max-width: 600px; margin: 0 auto 3rem auto; }
@@ -66,7 +66,7 @@
 <body>
     <section class="container">
         <h2 class="page-title">
-            <a href="index.html"><img src="logo.png" alt="FERD 로고"></a>
+            <a href="index.html"><img src="logo1.png" alt="FERD 로고"></a>
             소방법, 산안법 질의회신 통합 검색
         </h2>
         
@@ -81,7 +81,10 @@
         <div id="resultContainer" class="result-list">
             </div>
         
-        <div class="promo-banners">
+        </section>
+
+    <div style="width: 100%; padding: 0 2rem 4rem 2rem; background: #ffffff;">
+        <div class="promo-banners" style="margin-top: 0;">
             <a href="seb-system.html" class="promo-banner-link">
                 <span class="banner-title">👉 셉(SEB) 시스템 알아보기</span>
                 <span class="banner-desc">App 설치 없이 문자로 끝내는 합법적인 화재수신기 무인 원격제어 솔루션</span>
@@ -91,7 +94,7 @@
                 <span class="banner-desc">현장에 부착된 QR, NFC 태그를 통해 종사자 의견청취, 작업중지, 아차사고 접수·관리</span>
             </a>
         </div>
-    </section>
+    </div>
 
     <footer>
         <div class="footer-grid">
