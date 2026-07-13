@@ -44,6 +44,7 @@
         /* 질의회신 버튼용 신규 디자인 */
         .btn-outline { background-color: #1a202c; color: #e2e8f0; border: 1px solid #4a5568; border-radius: 30px; }
         .btn-outline:hover { background-color: #2d3748; color: #fff; border-color: #e53e3e; }
+        .search-card:hover { background:#202b38 !important; border-color:#556274 !important; }
 
         /* 모바일 기기 최적화 (반응형) */
         @media (max-width: 768px) {
@@ -81,15 +82,25 @@
                 <div class="hero-box">
                     <h2>세이프링크</h2>
                     <p>현장에 부착된 QR, NFC 태그를 통해<br>종사자 의견청취, 작업중지, 아차사고 접수·관리</p>
-                    <button class="btn btn-primary" onclick="alert('준비 중입니다')">자세히 알아보기</button>
+                    <button class="btn btn-primary" onclick="alert('서비스 리뉴얼 중입니다. 곧 새로운 모습으로 찾아뵙겠습니다.')">자세히 알아보기</button>
                 </div>
             </div>
 
             <div style="margin-top: 3.5rem; display: flex; justify-content: center;">
-                <a href="qa-search.html" class="btn btn-outline" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.8rem; padding: 0.6rem 2.5rem; font-size: 1.05rem;">
-                    소방법, 산안법 질의회신 통합 검색
-                </a>
-            </div>
+    <a href="qa-search.html" class="search-card" style="max-width: 760px; width: 100%; background: #1a202c; border: 1px solid #4a5568; border-radius: 14px; padding: 1.3rem 1.8rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.25s ease;">
+
+        <div style="text-align: center; width: 100%;">
+            <h2 style="font-size: 1.25rem; margin-bottom: 0.3rem;">
+                🔍 관련 법령 질의회신 통합검색
+            </h2>
+
+            <p style="margin: 0; color: #cbd5e0; font-size: 0.95rem;">
+                소방법, 산안법, 전기사업법(KEC), 기계설비법, 공동주택 관련 법령 질의회신을 쉽고 빠르게 검색해 보세요.
+            </p>
+        </div>
+
+    </a>
+</div>
         </div>
     </section>
 
