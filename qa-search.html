@@ -17,7 +17,7 @@
         
         .container { max-width: 900px; margin: 0 auto; padding: 2rem 2rem; flex: 1; width: 100%; }
         .page-title { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; font-size: 1.4rem; margin-bottom: 0.6rem; color: #1a202c; font-weight: 700; text-align: center; }
-        .page-title img { height: 65px; vertical-align: middle; }
+        .page-title img { height: 75px; vertical-align: middle; }
         
         .search-box { position: relative; max-width: 600px; margin: 0 auto 3rem auto; }
         .search-box input { width: 100%; padding: 0.9rem 3.5rem 0.9rem 1.5rem; border: 1px solid #cbd5e0; border-radius: 8px; font-size: 1.05rem; font-family: 'NexonLv2Gothic', sans-serif; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
@@ -79,11 +79,11 @@
     <section class="container">
         <h2 class="page-title">
             <a href="index.html"><img src="logo1.png" alt="FERD 로고"></a>
-            소방법, 산안법 질의회신 통합 검색
+            관련 법령 질의회신 통합 검색
         </h2>
         
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="키워드로 검색하세요(예: 알람밸브, 주펌프, 피난구유도등, 완비 등)" onkeyup="if(window.event.keyCode==13){doSearch()}">
+            <input type="text" id="searchInput" placeholder="소방, 산업안전, 전기, 기계, 공동주택 관련 키워드 검색" onkeyup="if(window.event.keyCode==13){doSearch()}">
             <button type="button" onclick="doSearch()" aria-label="검색">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
             </button>
@@ -98,7 +98,7 @@
     <div style="width: 100%; padding: 0 2rem 4rem 2rem; background: #ffffff;">
         <div class="promo-banners" style="margin-top: 0;">
             <a href="seb-system.html" class="promo-banner-link">
-                <span class="banner-title">👉 셉(SEB) 시스템 알아보기</span>
+                <span class="banner-title">👉 셉(SEB)시스템 알아보기</span>
                 <span class="banner-desc">App 설치 없이 문자로 끝내는 합법적인 화재수신기 무인 원격제어 솔루션</span>
             </a>
             <a href="#" class="promo-banner-link" onclick="alert('준비 중입니다')">
@@ -233,6 +233,8 @@
     </script>
 
     <script src="qa-data.js"></script>
+    <script src="qa-data1.js"></script>
+    <script src="qa-data2.js"></script>
     <script>
         function doSearch() {
             const keyword = document.getElementById("searchInput").value.trim().toLowerCase();
@@ -247,12 +249,20 @@
                 return;
             }
 
-            // 데이터 필터링 (제목, 질문, 답변 내용에 키워드가 포함되어 있는지 확인)
-            const results = qaData.filter(item => 
-                item.title.toLowerCase().includes(keyword) || 
-                item.question.toLowerCase().includes(keyword) || 
-                item.answer.toLowerCase().includes(keyword)
-            );
+            // 여러 파일의 데이터를 하나로 안전하게 합치기
+            let allData = [];
+            if (typeof qaData !== 'undefined') allData = allData.concat(qaData);
+            if (typeof qaData1 !== 'undefined') allData = allData.concat(qaData1);
+            if (typeof qaData2 !== 'undefined') allData = allData.concat(qaData2);
+
+            // 검색어를 띄어쓰기 기준으로 분리
+            const searchWords = keyword.split(/\s+/);
+
+            // 데이터 필터링 (입력된 모든 단어가 제목, 질문, 답변 중 어딘가에 모두 포함되어 있는지 확인)
+            const results = allData.filter(item => {
+                const fullText = (item.title + " " + item.question + " " + item.answer).toLowerCase();
+                return searchWords.every(word => fullText.includes(word));
+            });
 
             countDiv.innerHTML = `총 <strong>${results.length}</strong>건의 질의회신이 검색되었습니다.`;
 
@@ -270,7 +280,7 @@
 
                 const cardHtml = `
                     <div class="result-card">
-                        <span class="result-category">[${item.category}]</span>
+                        <span class="result-category">[${item.year ? item.year + ' ' : ''}${item.category}]</span>
                         <h3 class="result-title">${item.title}</h3>
                         <div class="result-text"><strong>Q.</strong> ${item.question}</div>
                         <div class="result-text" style="background: #f8fafc; padding: 1rem; border-radius: 8px;"><strong>A.</strong> ${item.answer}</div>
