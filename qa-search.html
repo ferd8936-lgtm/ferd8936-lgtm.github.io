@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소방법·산업안전보건법 질의회신 통합검색 | 퍼드</title>
-    <meta name="description" content="소방법, 산업안전보건법, 소방시설법, 화재안전기준(NFPC·NFTC), 질의회신, 법령 해설을 퍼드(FERD)에서 통합 검색하세요.">
+    <title>소방법·산업안전보건법 정부 질의회신 통합검색 | 퍼드</title>
+    <meta name="description" content="소방법, 산업안전보건법 정부 질의회신을 퍼드(FERD)에서 통합 검색하세요.">
     <style>
         @font-face {
             font-family: 'NexonLv2Gothic';
@@ -42,6 +42,7 @@
         .promo-banners { display: flex; flex-direction: column; gap: 0.8rem; width: 100%; max-width: 600px; margin: 3rem auto 0 auto; }
         .promo-banner-link { display: flex; flex-direction: column; align-items: flex-start; text-align: left; padding: 1rem 1.2rem; border-radius: 8px; border: 1px solid #cbd5e0; background: #ffffff; color: #1a202c; transition: all 0.2s; }
         .promo-banner-link:hover { border-color: #e53e3e; background: #f8fafc; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .naver-blog-link:hover { border-color: #03c75a; }
         .banner-title { font-size: 1.05rem; font-weight: bold; color: #1a202c; margin-bottom: 0.3rem; display: block; }
         .banner-desc { font-size: 0.85rem; color: #4a5568; font-weight: normal; line-height: 1.4; word-break: keep-all; display: block; }
 
@@ -83,7 +84,7 @@
         </h2>
         
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="소방, 산업안전, 전기, 기계, 공동주택 관련 키워드 검색" onkeyup="if(window.event.keyCode==13){doSearch()}">
+            <input type="text" id="searchInput" placeholder="소방, 산업안전 관련 키워드로 검색" onkeyup="if(window.event.keyCode==13){doSearch()}">
             <button type="button" onclick="doSearch()" aria-label="검색">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
             </button>
@@ -97,11 +98,15 @@
 
     <div style="width: 100%; padding: 0 2rem 4rem 2rem; background: #ffffff;">
         <div class="promo-banners" style="margin-top: 0;">
+            <a href="https://blog.naver.com/ferd1229" target="_blank" class="promo-banner-link naver-blog-link">
+                <span class="banner-title">👉 퍼드 연구소 블로그 방문</span>
+                <span class="banner-desc">소방 법령부터 기술정보까지, 모든 궁금한 사항을 퍼드(FERD) 블로그에서 검색해 보세요!</span>
+            </a>
             <a href="seb-system.html" class="promo-banner-link">
                 <span class="banner-title">👉 셉(SEB)시스템 알아보기</span>
                 <span class="banner-desc">App 설치 없이 문자로 끝내는 합법적인 화재수신기 무인 원격제어 솔루션</span>
             </a>
-            <a href="#" class="promo-banner-link" onclick="alert('준비 중입니다')">
+            <a href="#" class="promo-banner-link" onclick="alert('서비스 리뉴얼 중입니다. 곧 새로운 모습으로 찾아뵙겠습니다.')">
                 <span class="banner-title">👉 세이프링크 알아보기</span>
                 <span class="banner-desc">현장에 부착된 QR, NFC 태그를 통해 종사자 의견청취, 작업중지, 아차사고 접수·관리</span>
             </a>
