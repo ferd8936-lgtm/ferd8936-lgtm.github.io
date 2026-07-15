@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소방법·산업안전보건법 정부 질의회신 통합검색 | 퍼드</title>
-    <meta name="description" content="소방법, 산업안전보건법 정부 질의회신을 퍼드(FERD)에서 통합 검색하세요.">
+    <title>정부 질의회신 통합 검색 | 퍼드</title>
+    <meta name="description" content="소방법, 산업안전보건법, 전기설비규정(KEC), 기계설비법, 공동주택관리법 질의회신을 퍼드(FERD)에서 통합 검색하세요.">
     <style>
         @font-face {
             font-family: 'NexonLv2Gothic';
@@ -242,8 +242,28 @@
     <script src="qa-data2.js"></script>
     <script src="qa-data3.js"></script>
     <script src="qa-data5.js"></script>
-    <script src="qa-data5.js"></script>
+    <script src="qa-data6.js"></script>
+    <script src="qa-data7.js"></script>
+    <script src="qa-data8.js"></script>
+    <script src="qa-data9.js"></script>
+    <script src="qa-data10.js"></script>
+    <script src="qa-data11.js"></script>
+    <script src="qa-data12.js"></script>
+    <script src="qa-data13.js"></script>
     <script>
+        // 텍스트 유사도 검사 함수 (특수기호 제외 90% 이상 일치 여부 확인)
+        function getSimilarity(str1, str2) {
+            const s1 = (str1 || "").replace(/[^가-힣a-zA-Z0-9]/g, '');
+            const s2 = (str2 || "").replace(/[^가-힣a-zA-Z0-9]/g, '');
+            if (s1 === s2) return 1.0;
+            if (s1.length < 2 || s2.length < 2) return 0.0;
+            let matchCount = 0;
+            for (let i = 0; i < s1.length - 1; i++) {
+                if (s2.includes(s1.substring(i, i + 2))) matchCount++;
+            }
+            return (2.0 * matchCount) / (s1.length - 1 + s2.length - 1);
+        }
+
         function doSearch() {
             const keyword = document.getElementById("searchInput").value.trim().toLowerCase();
             const container = document.getElementById("resultContainer");
@@ -267,10 +287,28 @@
             const searchWords = keyword.split(/\s+/);
 
             // 데이터 필터링 (입력된 모든 단어가 제목, 질문, 답변 중 어딘가에 모두 포함되어 있는지 확인)
-            const results = allData.filter(item => {
+            let results = allData.filter(item => {
                 const fullText = (item.title + " " + item.question + " " + item.answer).toLowerCase();
                 return searchWords.every(word => fullText.includes(word));
             });
+
+            // 중복 회신문 제거 (기호 제외, 질문+답변 텍스트 90% 이상 일치 기준)
+            const uniqueResults = [];
+            for (const item of results) {
+                const itemText = item.question + item.answer;
+                let isDuplicate = false;
+                for (const uniqueItem of uniqueResults) {
+                    const uniqueText = uniqueItem.question + uniqueItem.answer;
+                    if (getSimilarity(itemText, uniqueText) >= 0.9) {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+                if (!isDuplicate) {
+                    uniqueResults.push(item);
+                }
+            }
+            results = uniqueResults;
 
             countDiv.innerHTML = `총 <strong>${results.length}</strong>건의 질의회신이 검색되었습니다.`;
 
