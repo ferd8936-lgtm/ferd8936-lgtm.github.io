@@ -82,7 +82,7 @@
                 <div class="hero-box">
                     <h2>세이프링크</h2>
                     <p>현장에 부착된 QR, NFC 태그를 통해<br>종사자 의견청취, 작업중지, 아차사고 접수·관리</p>
-                    <button class="btn btn-primary" onclick="alert('서비스 리뉴얼 중입니다. 곧 새로운 모습으로 찾아뵙겠습니다.')">자세히 알아보기</button>
+                    <button class="btn btn-primary" onclick="trackSafeLinkClick(); alert('서비스 리뉴얼 중입니다. 곧 새로운 모습으로 찾아뵙겠습니다.')">자세히 알아보기</button>
                 </div>
             </div>
 
@@ -183,6 +183,11 @@
             return d.getUTCFullYear() + "-W" + weekNo;
         }
         const weekString = getWeek();
+
+        // 세이프링크 버튼 클릭 파이어베이스 기록 함수
+        function trackSafeLinkClick() {
+            db.ref('clicks/safelink').set(firebase.database.ServerValue.increment(1));
+        }
 
         // 페이지가 열리면 자동으로 파이어베이스 DB의 해당 날짜 조회수를 +1 합니다.
         window.onload = function() {
