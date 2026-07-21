@@ -74,6 +74,11 @@
         .stats-table td { color: #e53e3e; font-weight: bold; }
         .stats-close { padding: 0.6rem 2rem; background: #e53e3e; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: background 0.2s; }
         .stats-close:hover { background: #c53030; }
+        
+        /* 로딩 아이콘 애니메이션 */
+        .loader-container { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 4rem 0; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #e53e3e; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin-bottom: 1rem; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -106,7 +111,7 @@
                 <span class="banner-title">👉 셉(SEB)시스템 알아보기</span>
                 <span class="banner-desc">App 설치 없이 문자로 끝내는 합법적인 화재수신기 무인 원격제어 솔루션</span>
             </a>
-            <a href="#" class="promo-banner-link" onclick="alert('서비스 리뉴얼 중입니다. 곧 새로운 모습으로 찾아뵙겠습니다.')">
+            <a href="#" class="promo-banner-link" onclick="trackSafeLinkClick(); alert('서비스 리뉴얼 중입니다. 곧 새로운 모습으로 찾아뵙겠습니다.')">
                 <span class="banner-title">👉 세이프링크 알아보기</span>
                 <span class="banner-desc">현장에 부착된 QR, NFC 태그를 통해 종사자 의견청취, 작업중지, 아차사고 접수·관리</span>
             </a>
@@ -188,6 +193,11 @@
             return d.getUTCFullYear() + "-W" + weekNo;
         }
         const weekString = getWeek();
+
+        // 세이프링크 배너 클릭 파이어베이스 기록 함수
+        function trackSafeLinkClick() {
+            db.ref('clicks/safelink').set(firebase.database.ServerValue.increment(1));
+        }
 
         window.onload = function() {
             db.ref('qa_views/total').set(firebase.database.ServerValue.increment(1));
@@ -277,7 +287,13 @@
                 return;
             }
 
-            // 여러 파일의 데이터를 하나로 안전하게 합치기
+            // 로딩 아이콘 띄우기 (데이터 합치기 및 검색 로직 전)
+            countDiv.innerHTML = "";
+            container.innerHTML = "<div class='loader-container'><div class='loader'></div></div>";
+
+            // 브라우저가 로딩 아이콘을 렌더링할 수 있도록 아주 짧은 지연시간(0.1초) 후 검색 시작
+            setTimeout(() => {
+                // 여러 파일의 데이터를 하나로 안전하게 합치기
             let allData = [];
             if (typeof qaData !== 'undefined') allData = allData.concat(qaData);
             if (typeof qaData1 !== 'undefined') allData = allData.concat(qaData1);
@@ -320,6 +336,9 @@
 
             countDiv.innerHTML = `총 <strong>${results.length}</strong>건의 질의회신이 검색되었습니다.`;
 
+            // 검색이 완료되었으므로 기존 로딩 아이콘 화면을 백지상태로 깔끔하게 지우기
+            container.innerHTML = "";
+
             if (results.length === 0) {
                 container.innerHTML = "<div class='no-result'>검색 결과가 없습니다. 다른 키워드로 검색해 보세요.</div>";
                 return;
@@ -342,7 +361,8 @@
                     </div>
                 `;
                 container.innerHTML += cardHtml;
-            });
+                });
+            }, 100);
         }
     </script>
 </body>
