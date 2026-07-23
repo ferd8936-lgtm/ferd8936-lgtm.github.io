@@ -83,7 +83,7 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
     <!-- 카카오톡 공유 API -->
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js" integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJd/KqxGjHXfsG2sB0ALcOa" crossorigin="anonymous"></script>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"></script>
 </head>
 <body>
     <section class="container">
@@ -271,10 +271,6 @@
     <script src="qa-data6.js"></script>
     <script src="qa-data7.js"></script>
     <script src="qa-data8.js"></script>
-    <script src="qa-data9.js"></script>
-    <script src="qa-data10.js"></script>
-    <script src="qa-data11.js"></script>
-    <script src="qa-data12.js"></script>
     <script>
         // 텍스트 유사도 검사 함수 (특수기호 제외 90% 이상 일치 여부 확인)
         function getSimilarity(str1, str2) {
@@ -308,7 +304,7 @@
 
             // 브라우저가 로딩 아이콘을 렌더링할 수 있도록 아주 짧은 지연시간(0.1초) 후 검색 시작
             setTimeout(() => {
-                // 여러 파일의 데이터를 하나로 안전하게 합치기
+            // 여러 파일의 데이터를 하나로 안전하게 합치기
             let allData = [];
             if (typeof qaData !== 'undefined') allData = allData.concat(qaData);
             if (typeof qaData1 !== 'undefined') allData = allData.concat(qaData1);
@@ -319,9 +315,7 @@
             if (typeof qaData6 !== 'undefined') allData = allData.concat(qaData6);
             if (typeof qaData7 !== 'undefined') allData = allData.concat(qaData7);          
             if (typeof qaData8 !== 'undefined') allData = allData.concat(qaData8);
-            if (typeof qaData9 !== 'undefined') allData = allData.concat(qaData9);
-            if (typeof qaData10 !== 'undefined') allData = allData.concat(qaData10);          
-
+           
             // 검색어를 띄어쓰기 기준으로 분리
             const searchWords = keyword.split(/\s+/);
 
