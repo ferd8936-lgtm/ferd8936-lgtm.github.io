@@ -417,7 +417,7 @@
             const searchUrl = getSafeUrl();
             Kakao.Share.sendDefault({
                 objectType: 'text',
-                text: `[퍼드 정부 질의회신]\n분류: ${category}\n제목: ${title}\n\n[질의 내용]\n${question}\n\n[회신 내용]\n${answer}\n\n👉 퍼드 홈페이지에서 전문 검색하기`,
+                text: `[퍼드 정부 질의회신]\n분류: ${category}\n제목: ${title}\n\n[질의 내용]\n${question}\n\n[회신 내용]\n${answer}\n\n👉 퍼드 홈페이지에서 더 많은 질의회신 검색하기`,
                 link: {
                     mobileWebUrl: searchUrl,
                     webUrl: searchUrl,
@@ -427,7 +427,7 @@
 
         function shareSMS(title, category, question, answer) {
             const searchUrl = getSafeUrl();
-            const text = `[퍼드 정부 질의회신]\n분류: ${category}\n제목: ${title}\n\n[질의 내용]\n${question}\n\n[회신 내용]\n${answer}\n\n👉 퍼드 홈페이지에서 전문 검색하기:\n${searchUrl}`;
+            const text = `[퍼드 정부 질의회신]\n분류: ${category}\n제목: ${title}\n\n[질의 내용]\n${question}\n\n[회신 내용]\n${answer}\n\n👉 퍼드 홈페이지에서 더 많은 질의회신 검색하기:\n${searchUrl}`;
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
             const separator = isIOS ? '&' : '?';
             window.location.href = `sms:${separator}body=${encodeURIComponent(text)}`;
