@@ -271,6 +271,7 @@
     <script src="qa-data6.js"></script>
     <script src="qa-data7.js"></script>
     <script src="qa-data8.js"></script>
+    <script src="qa-data9.js"></script>
     <script>
         // 텍스트 유사도 검사 함수 (특수기호 제외 90% 이상 일치 여부 확인)
         function getSimilarity(str1, str2) {
@@ -315,6 +316,7 @@
             if (typeof qaData6 !== 'undefined') allData = allData.concat(qaData6);
             if (typeof qaData7 !== 'undefined') allData = allData.concat(qaData7);          
             if (typeof qaData8 !== 'undefined') allData = allData.concat(qaData8);
+            if (typeof qaData9 !== 'undefined') allData = allData.concat(qaData9);
            
             // 검색어를 띄어쓰기 기준으로 분리
             const searchWords = keyword.split(/\s+/);
