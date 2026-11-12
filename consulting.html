@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소방·피난방화 기술 컨설팅 | 퍼드(FERD)</title>
+    <meta name="description" content="퍼드(FERD) 소방 컨설팅은 소방, 피난방화 등 적법성, 개선, 투자 등에 대한 현장 점검 후 맞춤형 종합 진단 레포트를 제출합니다.">
+    <meta name="keywords" content="소방컨설팅, 피난방화, 소방법 적법성, 소방점검 레포트, 비화재보 개선, 소방공사 투자검토, 소방기술자문, 퍼드, FERD">
+    <style>
+        @font-face {
+            font-family: 'NexonLv2Gothic';
+            src: url('NexonLv2Gothic.ttf') format('truetype');
+            font-weight: normal; font-style: normal;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'NexonLv2Gothic', sans-serif; line-height: 1.6; color: #1a202c; background-color: #ffffff; padding-top: 65px; display: flex; flex-direction: column; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; }
+        h1, h2, h3, h4 { color: #1a202c; font-weight: 700; word-break: keep-all; }
+        p { color: #000000; margin-bottom: 1rem; word-break: keep-all; }
+        .highlight { color: #e53e3e; }
+        section[id] { scroll-margin-top: 110px; }
+
+        /* 1. 상단 바 디자인 (셉 시스템과 100% 동일) */
+        .main-header { position: fixed; top: 0; left: 0; width: 100%; padding: 0.2rem 2rem; background-color: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #e2e8f0; z-index: 100; display: flex; align-items: center; justify-content: center; gap: 4rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .main-header img { height: 65px; cursor: pointer; transform: translateY(4px); }
+        .header-nav { display: flex; gap: 4rem; font-weight: bold; color: #1a202c; font-size: 1.15rem; margin-left: 0; }
+        .header-nav a:hover { color: #e53e3e; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; width: 100%; }
+        .text-center { text-align: center; }
+        .section-title { font-size: 2.2rem; margin-bottom: 3rem; text-align: center; }
+
+        /* 2. 핵심 컨설팅 분야 (셉 시스템 solution-card 스타일) */
+        .title-banner { background: linear-gradient(rgba(22, 27, 34, 0.65), rgba(22, 27, 34, 0.65)), url('c1.png') center/cover no-repeat; border-radius: 16px; padding: 4rem 1.5rem; margin-bottom: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .title-banner .section-title { color: #ffffff; margin-bottom: 1.2rem; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+        .title-banner p { color: #ffffff; margin-bottom: 0; line-height: 1.8; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+        .solution-grid { display: grid; grid-template-columns: 1fr; gap: 2.2rem; margin-bottom: 2rem; }
+        .solution-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.06); display: flex; flex-direction: column; transition: transform 0.3s; }
+        .solution-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: #e53e3e; }
+        .solution-img { width: 100%; height: 230px; object-fit: cover; display: block; border-bottom: 1px solid #e2e8f0; }
+        .solution-content { padding: 2.5rem 2.2rem; flex: 1; display: flex; flex-direction: column; }
+        .solution-badge { display: inline-block; align-self: flex-start; background: #fff5f5; color: #e53e3e; border: 1px solid #feb2b2; font-size: 0.85rem; font-weight: bold; padding: 0.25rem 0.75rem; border-radius: 6px; margin-bottom: 0.8rem; }
+        .solution-content h3 { font-size: 1.55rem; margin-bottom: 1.2rem; color: #1a202c; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.9rem; }
+        .solution-content ul { padding-left: 1.2rem; color: #000000; line-height: 1.8; font-size: 1.03rem; margin-bottom: 1.2rem; font-weight: 500; flex: 1; }
+        .solution-content ul li { margin-bottom: 0.75rem; }
+        .promo-banner { background-color: rgba(221, 107, 32, 0.05); border-radius: 8px; border: 1px solid rgba(221, 107, 32, 0.2); padding: 0.85rem 1.2rem; margin-top: auto; }
+        .promo-banner h4 { color: #dd6b20; margin-bottom: 0.35rem; font-size: 1.02rem; }
+        .promo-banner p { margin-bottom: 0; font-size: 0.95rem; }
+
+        /* 3. 진행 절차 및 레포트 산출물 안내 (화이트 카드 스타일) */
+        .process-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.2rem; margin-bottom: 3.5rem; }
+        .process-card { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #1a202c; border-radius: 12px; padding: 1.6rem 1.2rem; text-align: center; box-shadow: 0 6px 18px rgba(0,0,0,0.04); transition: all 0.25s ease; }
+        .process-card:hover { border-top-color: #e53e3e; transform: translateY(-4px); }
+        .process-step { display: inline-block; background: #edf2f7; color: #e53e3e; font-size: 0.82rem; font-weight: bold; padding: 0.2rem 0.65rem; border-radius: 20px; margin-bottom: 0.7rem; }
+        .process-card h4 { font-size: 1.12rem; margin-bottom: 0.6rem; color: #1a202c; }
+        .process-card p { font-size: 0.92rem; color: #000000; margin-bottom: 0; line-height: 1.55; }
+
+        .report-box { background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 16px; padding: 2.8rem 2.2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.04); }
+        .report-box-title { text-align: center; font-size: 1.65rem; margin-bottom: 0.6rem; color: #1a202c; }
+        .report-box-sub { text-align: center; font-size: 1.05rem; color: #000000; margin-bottom: 2rem; font-weight: 500; }
+        .report-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .report-item { background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid #e53e3e; border-radius: 10px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .report-item h4 { font-size: 1.15rem; color: #1a202c; margin-bottom: 0.5rem; }
+        .report-item p { font-size: 0.98rem; color: #000000; margin-bottom: 0; line-height: 1.6; }
+
+        /* 4. FAQ 디자인 (셉 시스템과 100% 동일) */
+        .faq-container { max-width: 900px; margin: 0 auto; }
+        details.faq-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; margin-bottom: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.02); overflow: hidden; }
+        details.faq-item summary { padding: 1rem 1.5rem; font-size: 1.15rem; font-weight: bold; background: #f8fafc; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: #1a202c; transition: background 0.3s; }
+        details.faq-item summary:hover { background: #edf2f7; }
+        details.faq-item summary::-webkit-details-marker { display: none; }
+        details.faq-item summary::after { content: '+'; font-size: 1.8rem; color: #2b6cb0; transition: transform 0.3s; font-weight: normal; }
+        details.faq-item[open] summary::after { transform: rotate(45deg); }
+        details.faq-item p { padding: 1rem 1.5rem; margin: 0; color: #000000; line-height: 1.6; font-size: 1.05rem; border-top: 1px solid #e2e8f0; background: #ffffff; font-weight: 500; }
+
+        /* 5. 도입문의 세련된 분리형 UI (셉 시스템과 100% 동일) */
+        .contact-section { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; margin-bottom: 3rem; }
+        .contact-card { background: #ffffff; padding: 3.5rem 2rem; text-align: center; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.04); flex: 1; min-width: 300px; max-width: 500px; }
+        .contact-card h2 { font-size: 1.5rem; margin-bottom: 1rem; color: #1a202c; font-weight: 800; }
+        .contact-card p { font-size: 1.1rem; margin-bottom: 2.5rem; color: #000000; min-height: 50px; font-weight: 500; }
+        .btn-kakao { background-color: #FEE500; color: #191919; padding: 0.8rem 1.8rem; font-size: 1.1rem; font-weight: bold; border-radius: 12px; display: inline-flex; align-items: center; gap: 0.6rem; box-shadow: 0 4px 10px rgba(254, 229, 0, 0.3); transition: all 0.3s; justify-content: center; }
+        .btn-blog { background-color: #03C75A; color: #ffffff; padding: 0.8rem 1.8rem; font-size: 1.1rem; font-weight: bold; border-radius: 12px; display: inline-flex; align-items: center; gap: 0.6rem; box-shadow: 0 4px 10px rgba(3, 199, 90, 0.3); transition: all 0.3s; justify-content: center; }
+        .btn-kakao:hover, .btn-blog:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+
+        /* 6. 푸터 디자인 (셉 시스템과 100% 동일) */
+        footer { background: #161b22; border-top: 1px solid #2d3748; padding: 0.8rem 1rem 0.5rem 1rem; margin-top: auto; }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4rem; border-bottom: 1px solid #2d3748; padding-bottom: 0.5rem; }
+        .footer-item { display: flex; flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+        .footer-info p:first-child { color: #a0aec0; font-size: 0.65rem; margin-bottom: 0; text-align: left; }
+        .footer-info p:last-child { color: #fff; font-size: 0.85rem; font-weight: normal; margin-bottom: 0; text-align: left; }
+        .footer-copyright { text-align: center; margin-top: 0.5rem; font-size: 0.75rem; color: #718096; }
+
+        @media (min-width: 768px) {
+            .solution-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+        }
+
+        /* 모바일 기기 최적화 (반응형 공통) */
+        @media (max-width: 960px) {
+            .process-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            body { padding-top: 50px; }
+            .main-header { justify-content: space-between; align-items: center; padding: 0 1.5rem; }
+            .main-header img { height: 65px; transform: translate(-10px, 3px); margin: -10px 0; }
+            .menu-icon { display: block !important; }
+            .header-nav { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255, 255, 255, 0.98); flex-direction: column; gap: 0; padding: 0; border-bottom: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+            .header-nav a { padding: 0.6rem 2rem; font-size: 1.05rem; border-bottom: 1px solid #f1f5f9; text-align: left; }
+            #menu-btn:checked ~ .header-nav { display: flex; }
+            .section-title { font-size: 1.8rem; margin-bottom: 2rem; }
+
+            .process-grid { grid-template-columns: 1fr; }
+            .report-grid { grid-template-columns: 1fr; }
+            .report-box { padding: 2rem 1.2rem; }
+
+            .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem 0.5rem; padding-bottom: 1rem; }
+            .footer-item { align-items: flex-start; }
+
+            details.faq-item p { text-align: justify; word-break: break-all; }
+            .contact-card p br { display: none; }
+        }
+
+        /* 관리자 조회수 통계 팝업 디자인 */
+        .stats-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; }
+        .stats-content { background: #ffffff; padding: 2.5rem 1.5rem; border-radius: 12px; width: 90%; max-width: 600px; text-align: center; color: #1a202c; border-top: 5px solid #e53e3e; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .stats-content h2 { color: #1a202c; margin-bottom: 1.5rem; font-size: 1.5rem; }
+        .stats-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        .stats-table th, .stats-table td { border: 1px solid #cbd5e0; padding: 0.8rem; text-align: center; font-size: 1.05rem; }
+        .stats-table th { background: #f8fafc; font-weight: bold; color: #1a202c; }
+        .stats-table td { color: #e53e3e; font-weight: bold; }
+        .stats-close { padding: 0.6rem 2rem; background: #e53e3e; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: background 0.2s; }
+        .stats-close:hover { background: #c53030; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <a href="index.html"><img src="logo1.png" alt="FERD 로고"></a>
+        <input type="checkbox" id="menu-btn" style="display: none;">
+        <label for="menu-btn" class="menu-icon" style="display: none; font-size: 1.8rem; cursor: pointer; color: #1a202c;">&#9776;</label>
+        <nav class="header-nav">
+            <a href="#service" onclick="document.getElementById('menu-btn').checked=false;">컨설팅분야</a>
+            <a href="#process" onclick="document.getElementById('menu-btn').checked=false;">진행절차</a>
+            <a href="#faq" onclick="document.getElementById('menu-btn').checked=false;">FAQ</a>
+            <a href="#contact" onclick="document.getElementById('menu-btn').checked=false;">상담문의</a>
+        </nav>
+    </header>
+
+    <section class="container" id="service" style="padding-top: 5rem;">
+        <div class="title-banner">
+            <h2 class="section-title">4대 핵심 컨설팅 분야</h2>
+            <p class="text-center" style="font-size: 1.15rem; font-weight: bold; margin-bottom: 0;">
+                퍼드는 다양한 경험과 전문성을 바탕으로<br>현장 점검부터 법령 해석, 개선 대책, 투자 타당성 검토 등에 이르기까지<br>체계적인 컨설팅 레포트를 제출해 드립니다.
+            </p>
+        </div>
+
+        <div class="solution-grid">
+            <article class="solution-card">
+                <img src="c2.png" alt="소방·피난방화 적법성 진단" class="solution-img">
+                <div class="solution-content">
+                    <span class="solution-badge">CONSULTING 01</span>
+                    <h3>① 소방·피난방화 적법성 진단</h3>
+                    <ul>
+                        <li><strong>소방법령 적합성:</strong> 소방법, 화재안전기준 등 적법성 진단 및 레포팅</li>
+                        <li><strong>피난·방화시설 점검:</strong> 건축법, 피난방화 등 적법성 진단 및 레포팅</li>
+                        <li><strong>유권해석 교차 검증:</strong> 다부처 질의회신 사례 기반 쟁점 명확화</li>
+                    </ul>
+                    <div class="promo-banner">
+                        <h4>📌 핵심 기대효과</h4>
+                        <p>중대재해처벌법, 소방법, 피난방화 등 <strong>위법 리스크 사전 차단</strong></p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="solution-card">
+                <img src="c3.png" alt="비화재보 개선 제안" class="solution-img">
+                <div class="solution-content">
+                    <span class="solution-badge">CONSULTING 02</span>
+                    <h3>② 비화재보 개선 제안</h3>
+                    <ul>
+                        <li><strong>비화재보 개선:</strong> 감지기 등 오작동 원인 정밀 추적 및 개선방향 제안</li>
+                        <li><strong>소방설비 투자:</strong> 비화재보 개선을 위한 설비 투자 방향 제안</li>
+                        <li><strong>스마트 관제 연계:</strong> 원격 제어 등을 통한 관리 효율화 방안 제시</li>
+                    </ul>
+                    <div class="promo-banner">
+                        <h4>📌 핵심 기대효과</h4>
+                        <p>반복되는 오작동 스트레스 해소 및 <strong>소방설비 신뢰성·안정성 확보</strong></p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="solution-card">
+                <img src="c4.png" alt="소방 공사비 적정성 검토" class="solution-img">
+                <div class="solution-content">
+                    <span class="solution-badge">CONSULTING 03</span>
+                    <h3>③ 소방 공사비 적정성 검토</h3>
+                    <ul>
+                        <li><strong>견적 타당성 분석:</strong> 공사업체 견적서, 설계도서, 시방서의 적정성 검증</li>
+                        <li><strong>투자 우선순위 수립:</strong> 법적 필수, 권고사항 분류하여 단계별 예산 배분</li>
+                        <li><strong>밸류 엔지니어링:</strong> VE를 통한 설비 성능 확보 및 비용 최소화 방향 제안</li>
+                    </ul>
+                    <div class="promo-banner">
+                        <h4>📌 핵심 기대효과</h4>
+                        <p>불필요한 <strong>과잉·중복 공사 방지</strong> 및 합리적인 투자 의사결정 지원</p>
+                    </div>
+                </div>
+            </article>
+
+            <article class="solution-card">
+                <img src="c5.png" alt="증축·리모델링·매입 사전 기술자문" class="solution-img">
+                <div class="solution-content">
+                    <span class="solution-badge">CONSULTING 04</span>
+                    <h3>④ 증축·리모델링·매입 사전 기술자문</h3>
+                    <ul>
+                        <li><strong>공간 변경 법규 검토:</strong> 레이아웃 변경, 증축/용도변경 소방시설 산출</li>
+                        <li><strong>건물 매입 실사:</strong> 건축물 매입·임차 전 잠재적 법규 위반 진단</li>
+                        <li><strong>설계 자문:</strong> 최초 설계 검토를 통한 소방시스템, 피난방화 최적화</li>
+                    </ul>
+                    <div class="promo-banner">
+                        <h4>📌 핵심 기대효과</h4>
+                        <p>공사 중 설계 변경이나 <strong>준공 불가로 인한 매몰 비용 예방</strong></p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="container" id="process" style="padding-top: 3rem; padding-bottom: 3rem;">
+        <h2 class="section-title">컨설팅 진행 절차</h2>
+        <div class="process-grid">
+            <div class="process-card">
+                <span class="process-step">STEP 01</span>
+                <h4>사전 상담·자료 검토</h4>
+                <p>건축물대장, 도면, 점검 지적내역, 공사 견적서 등 기초 자료 파악</p>
+            </div>
+            <div class="process-card">
+                <span class="process-step">STEP 02</span>
+                <h4>현장 정밀 점검</h4>
+                <p>소방시설, 피난·방화시설 설치 상태 및 작동 성능 현장 정밀 실사</p>
+            </div>
+            <div class="process-card">
+                <span class="process-step">STEP 03</span>
+                <h4>법령·엔지니어링 분석</h4>
+                <p>관계 법령, 화재안전기준, 정부 유권해석 기반 적법성·원인 분석</p>
+            </div>
+            <div class="process-card">
+                <span class="process-step">STEP 04</span>
+                <h4>개선·투자 대안 수립</h4>
+                <p>현장 맞춤형 기술 개선안 및 과잉 투자를 배제한 적정 투자계획 수립</p>
+            </div>
+            <div class="process-card">
+                <span class="process-step">STEP 05</span>
+                <h4>종합 레포트 제출</h4>
+                <p>진단 결과, 법적 근거, 개선·투자 실행 가이드를 담은 보고서 제출 및 설명</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="faq" style="padding-top: 3rem; padding-bottom: 5rem;">
+        <h2 class="section-title">자주 묻는 질문 (FAQ)</h2>
+        <div class="faq-container">
+            <details class="faq-item">
+                <summary>Q1. 법정 소방시설 자체점검(작동·종합점검)과 소방 컨설팅은 무엇이 다른가요?</summary>
+                <p>법정 자체점검은 소방서 제출을 목적으로 설비의 단순 고장 여부를 확인하여 '불량 항목'을 나열하는 데 그치는 경우가 많습니다.<br>반면 퍼드의 소방 컨설팅은 소방뿐 아니라 건축법상 피난·방화구획 적법성까지 포괄적으로 진단하며, 고질적인 문제(비화재보 등)의 근본 원인을 해결하는 엔지니어링 대책과 업체 공사 견적의 적정성(투자 타당성)까지 검증하여 발주처 입장의 종합 레포트를 제출합니다.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Q2. 어떤 건축물이나 현장에서 주로 컨설팅을 의뢰하나요?</summary>
+                <p>공장·제조사업장, 물류센터, 대형 오피스 빌딩, 공동주택(아파트), 병원, 교육시설 등 모든 특정소방대상물이 대상입니다.<br>특히 대규모 소방 보수공사를 앞두고 투자 적정성 검토가 필요한 현장, 증축·리모델링·레이아웃 변경을 준비 중인 사업장, 중대재해처벌법 및 화재안전조사 대비가 필요한 기업에서 많이 의뢰하십니다.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Q3. 기존에 받은 소방 지적사항 보수 견적서가 적정한지도 검토해 주시나요?</summary>
+                <p>네, 가능합니다.<br>타 업체로부터 받은 점검 지적내역과 공사 견적서를 현장 상태 및 법적 기준과 대조하여, 꼭 해야 하는 필수 공사와 불필요한 과잉 공사를 명확히 구분해 드리고 합리적인 예산으로 개선할 수 있는 대안을 레포트에 담아 드립니다.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Q4. 현장 점검부터 최종 레포트 제출까지 기간은 얼마나 소요되나요?</summary>
+                <p>건축물의 규모와 컨설팅 범위(적법성 진단, 개선 대책, 투자비 검토 등)에 따라 다르지만, 통상 현장 정밀 점검은 1~2일 내외로 진행되며 점검 완료 후 약 1~2주 이내에 최종 종합 진단 레포트를 제출하고 브리핑을 진행합니다.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Q5. 컨설팅 비용은 어떻게 산정되며 신청은 어떻게 하나요?</summary>
+                <p>대상 건축물의 연면적, 용도, 점검 범위 및 요청하시는 중점 검토 사항에 따라 맞춤형으로 산정됩니다.<br>아래 카카오톡 1:1 상담이나 전화·이메일로 현장 개요와 고민 사항을 남겨주시면 사전 상담 후 합리적인 컨설팅 제안서와 견적을 신속히 안내해 드립니다.</p>
+            </details>
+        </div>
+    </section>
+
+    <section class="container" id="contact" style="padding-top: 0; padding-bottom: 4rem;">
+        <div class="contact-section">
+            <div class="contact-card">
+                <h2>소방 컨설팅 문의</h2>
+                <p>적법성 진단부터 설비 개선, 합리적 투자 검토까지<br> 퍼드(FERD)가 명확한 해답을 담은 레포트를 제공해 드립니다.</p>
+                <a href="http://pf.kakao.com/_exdjxcK/chat" target="_blank" class="btn-kakao">
+                    <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png" alt="카카오톡 아이콘" style="width: 32px; height: 32px;">
+                    카카오톡 1:1 상담하기
+                </a>
+            </div>
+
+            <div class="contact-card">
+                <h2>소방 관련 정보 확인하기</h2>
+                <p>법령부터 기술정보까지, 모든 궁금한 사항을 <br>퍼드(FERD) 블로그에서 검색해 보세요!</p>
+                <a href="https://blog.naver.com/ferd1229" target="_blank" class="btn-blog">
+                    <img src="naver-blog-icon.png" alt="네이버 블로그" style="width: 32px; height: 32px; border-radius: 6px; background-color: #fff; padding: 2px;">
+                    퍼드(FERD) 블로그 방문
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-item"><div class="footer-info"><p style="cursor: pointer;" onclick="checkAdminPassword()">COMPANY</p><p>퍼드 (FERD)</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>ADDRESS</p><p>대구 수성구 청수로 15 3층</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>CONTACT(문자 가능)</p><p>0507-1353-5682</p></div></div>
+            <div class="footer-item"><div class="footer-info"><p>EMAIL</p><p>ferd@ferd.co.kr</p></div></div>
+        </div>
+        <div class="footer-copyright">&copy; 2021 FERD. ALL RIGHTS RESERVED.</div>
+    </footer>
+
+    <div id="pwdModal" class="stats-modal">
+        <div class="stats-content" style="max-width: 320px; padding: 2.5rem 1.5rem;">
+            <h2 style="font-size: 1.4rem; margin-bottom: 1.5rem;">🔒 관리자 인증</h2>
+            <input type="password" id="adminPwd" placeholder="비밀번호 입력" style="width: 100%; padding: 0.8rem; margin-bottom: 1.5rem; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 1.1rem; text-align: center;" onkeyup="if(window.event.keyCode==13){verifyPwd()}">
+            <div style="display: flex; gap: 0.5rem;">
+                <button onclick="document.getElementById('pwdModal').style.display='none'" style="flex: 1; padding: 0.8rem; background: #cbd5e0; color: #1a202c; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem;">취소</button>
+                <button onclick="verifyPwd()" style="flex: 1; padding: 0.8rem; background: #e53e3e; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1.05rem;">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="statsModal" class="stats-modal">
+        <div class="stats-content">
+            <h2>📊 소방 컨설팅 페이지 조회수</h2>
+            <p style="font-size: 0.95rem; color: #718096; margin-bottom: 1.5rem; word-break: keep-all;">※ 파이어베이스와 연동합니다.</p>
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>일간</th>
+                        <th>주간</th>
+                        <th>월간</th>
+                        <th>총 누적</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="dailyViews">--</td>
+                        <td id="weeklyViews">--</td>
+                        <td id="monthlyViews">--</td>
+                        <td id="totalViews">--</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="stats-close" onclick="document.getElementById('statsModal').style.display='none'">닫기</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlpD8zy5x0VO3lAIpnJWuz_jMFS_rIKBo",
+            authDomain: "ferd-web.firebaseapp.com",
+            databaseURL: "https://ferd-web-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ferd-web",
+            storageBucket: "ferd-web.firebasestorage.app",
+            messagingSenderId: "509355840168",
+            appId: "1:509355840168:web:7957fd4cb28e3ad7baa89d"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        const now = new Date();
+        const yearMonth = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0');
+        const dateString = yearMonth + "-" + String(now.getDate()).padStart(2, '0');
+
+        function getWeek() {
+            const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+            d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            return d.getUTCFullYear() + "-W" + weekNo;
+        }
+        const weekString = getWeek();
+
+        window.onload = function() {
+            db.ref('consulting_views/total').set(firebase.database.ServerValue.increment(1));
+            db.ref('consulting_views/months/' + yearMonth).set(firebase.database.ServerValue.increment(1));
+            db.ref('consulting_views/weeks/' + weekString).set(firebase.database.ServerValue.increment(1));
+            db.ref('consulting_views/days/' + dateString).set(firebase.database.ServerValue.increment(1));
+        };
+
+        function checkAdminPassword() {
+            document.getElementById('adminPwd').value = '';
+            document.getElementById('pwdModal').style.display = 'flex';
+        }
+
+        function verifyPwd() {
+            const pwd = document.getElementById('adminPwd').value;
+            if (pwd === "7102") {
+                document.getElementById('pwdModal').style.display = 'none';
+                showStats();
+            } else {
+                alert("비밀번호가 일치하지 않습니다.");
+            }
+        }
+
+        function showStats() {
+            db.ref('consulting_views').once('value').then((snapshot) => {
+                const data = snapshot.val() || {};
+                const total = data.total || 0;
+                const monthly = (data.months && data.months[yearMonth]) ? data.months[yearMonth] : 0;
+                const weekly = (data.weeks && data.weeks[weekString]) ? data.weeks[weekString] : 0;
+                const daily = (data.days && data.days[dateString]) ? data.days[dateString] : 0;
+
+                document.getElementById('dailyViews').innerText = daily + "건";
+                document.getElementById('weeklyViews').innerText = weekly + "건";
+                document.getElementById('monthlyViews').innerText = monthly + "건";
+                document.getElementById('totalViews').innerText = total + "건";
+
+                document.getElementById('statsModal').style.display = 'flex';
+            }).catch((error) => {
+                console.error("통계 오류:", error);
+                document.getElementById('dailyViews').innerText = "DB 점검요망";
+                document.getElementById('weeklyViews').innerText = "DB 점검요망";
+                document.getElementById('monthlyViews').innerText = "DB 점검요망";
+                document.getElementById('totalViews').innerText = "DB 점검요망";
+                document.getElementById('statsModal').style.display = 'flex';
+                alert("통계 데이터를 불러오지 못했습니다.");
+            });
+        }
+    </script>
+</body>
+</html>
