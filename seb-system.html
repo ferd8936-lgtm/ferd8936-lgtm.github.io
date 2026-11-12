@@ -26,7 +26,7 @@
         .header-nav { display: flex; gap: 4rem; font-weight: bold; color: #1a202c; font-size: 1.15rem; margin-left: 0; }
         .header-nav a:hover { color: #e53e3e; }
         
-        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; width: 100%; }
         .text-center { text-align: center; }
         .section-title { font-size: 2.2rem; margin-bottom: 3rem; text-align: center; }
         
@@ -56,20 +56,20 @@
         
         /* 3. 치명적 문제점 세련된 디자인 */
         .problem-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 1000px; margin: 0 auto; }
-        .problem-card { background: linear-gradient(to bottom, #ffffff, #f7fafc); border: 1px solid #e2e8f0; border-top: 5px solid #e53e3e; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.06); transition: transform 0.3s ease; }
-        .problem-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .problem-card h3 { color: #1a202c; font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .problem-card p { text-align: justify; word-break: break-all; } /* 설명 글 양쪽 정렬로 변경 */
+        .problem-card { background: #ffffff; border: 1px solid #e2e8f0; padding: 0; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: transform 0.3s ease; }
+        .problem-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: #e53e3e; }
+        .problem-card h3 { color: #1a202c; font-size: 1.5rem; margin-bottom: 1rem; padding: 2rem 2rem 0 2rem; display: flex; align-items: center; gap: 0.5rem; }
+        .problem-card p { padding: 0 2rem 2rem 2rem; margin-bottom: 0; text-align: justify; word-break: break-all; } /* 설명 글 양쪽 정렬로 변경 */
 
         /* 3대 솔루션 이미지 공통 스타일 추가 */
-        .solution-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid #e2e8f0; display: block; }
+        .solution-img { width: 100%; height: 230px; object-fit: cover; border-bottom: 1px solid #e2e8f0; display: block; }
         
         /* 5. 3대 솔루션 (유튜브 제거, 깔끔한 텍스트 카드형 최적화) */
         .solution-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 4rem; }
         .solution-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.06); display: flex; flex-direction: column; transition: transform 0.3s; }
         .solution-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: #e53e3e; }
-        .solution-content { padding: 3rem 2.5rem; flex: 1; display: flex; flex-direction: column; }
-        .solution-content h3 { font-size: 1.7rem; margin-bottom: 1.5rem; color: #1a202c; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; }
+        .solution-card > h3 { font-size: 1.55rem; padding: 1.5rem 2rem; margin: 0; color: #1a202c; background: #ffffff; border-bottom: 1px solid #e2e8f0; }
+        .solution-content { padding: 2.2rem 2rem; flex: 1; display: flex; flex-direction: column; }
         .solution-content ul { padding-left: 1.2rem; color: #000000; line-height: 1.8; font-size: 1.05rem; margin-bottom: 1.5rem; font-weight: 500; }
         .solution-content ul li { margin-bottom: 0.8rem; }
         .promo-banner { background-color: rgba(221, 107, 32, 0.05); border-radius: 8px; border: 1px solid rgba(221, 107, 32, 0.2); padding: 0.8rem 1.2rem; margin-top: 1.2rem; }
@@ -103,6 +103,7 @@
         .footer-copyright { text-align: center; margin-top: 0.5rem; font-size: 0.75rem; color: #718096; }
 
         @media (min-width: 768px) {
+            .dark-section { width: calc(100% - 4rem); max-width: calc(1200px - 4rem); margin: 5rem auto 2rem auto; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
             .problem-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
             .solution-grid { grid-template-columns: repeat(3, 1fr); }
         }
@@ -110,6 +111,7 @@
         /* 모바일 기기 최적화 (반응형 공통) */
         @media (max-width: 768px) {
             body { padding-top: 50px; }
+            .container { padding-left: 0; padding-right: 0; }
             /* 1. 상단 바 (햄버거 메뉴) */
             .main-header { justify-content: space-between; align-items: center; padding: 0 1.5rem; }
             .main-header img { height: 65px; transform: translate(-10px, 3px); margin: -10px 0; }
@@ -130,8 +132,9 @@
             .h-chart-text { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); color: #fff; font-size: 0.75rem; font-weight: bold; white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
 
             /* 3. 문제점 텍스트 양쪽 정렬 및 여백 확보 */
-            .problem-card { padding: 1.5rem; }
-            .problem-card p { text-align: justify; word-break: break-all; }
+            .problem-card { padding: 0; }
+            .problem-card h3 { padding: 1.5rem 1.5rem 0 1.5rem; }
+            .problem-card p { padding: 0 1.5rem 1.5rem 1.5rem; text-align: justify; word-break: break-all; }
 
             /* 4. 푸터 2x2 배열 및 간격 확대 */
             .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem 0.5rem; padding-bottom: 1rem; }
@@ -250,12 +253,12 @@
         <h2 class="section-title">비화재보의 치명적 문제점</h2>
         <div class="problem-grid">
             <div class="problem-card">
-                <img src="problem1.png" alt="초기 신속한 대응 불가" style="width: 100%; height: auto; max-height: 350px; object-fit: contain; border-radius: 8px; margin-bottom: 1.5rem; display: block;">
+                <img src="problem1.png" alt="초기 신속한 대응 불가" class="solution-img">
                 <h3>🚨 신속한 초기 대응 불가</h3>
                 <p>화재수신기가 작동하더라도 <strong>물리적인 거리로 인해 사무실이나 외부에서는 즉각적인 인지</strong>가 불가능합니다.<br>빗발치는 문의 전화 속에서 <strong>관리자가 수신기를 직접 확인</strong>한 후 현장으로 출동해야 하므로 초기 대응 <strong>골든타임을 낭비</strong>하게 됩니다.<br><strong>원격 감시</strong>를 통해 주경종 작동 시 이를 <strong>신속히 인지</strong>하고 사전에 대응 준비를 할 수 있어야 합니다.</p>
             </div>
             <div class="problem-card">
-                <img src="problem2.png" alt="안전불감증 유발" style="width: 100%; height: auto; max-height: 350px; object-fit: contain; border-radius: 8px; margin-bottom: 1.5rem; display: block;">
+                <img src="problem2.png" alt="안전불감증 유발" class="solution-img">
                 <h3>🐺 '양치기 소년' 현상</h3>
                 <p>잦은 비화재보(오작동)로 인해 근무자와 거주자들은 경보가 울려도 <strong>"또 오작동이겠지"</strong>라며 대피하지 않는 치명적인 <strong>안전불감증</strong>에 노출되어 있습니다.<br><strong>수신기 원격 제어</strong>를 통해 비화재보시에는 <strong>경보를 신속히 끄고</strong> 오작동 상황을, 화재시에는 화재 상황을 신속히 <strong>현장 인원들에게 공유</strong>하는 시스템이 필요합니다.</p>
             </div>
@@ -270,9 +273,9 @@
 
         <div class="solution-grid">
             <article class="solution-card">
+                <h3>① SEB-R, P (공유형)</h3>
                 <img src="공유형.png" alt="SEB 공유형" class="solution-img">
                 <div class="solution-content">
-                    <h3>① SEB-R, P (공유형)</h3>
                     <ul>
                         <li><strong>SMS 발송:</strong> 주경종 작동시 "작동 위치 + 원격 접속 URL" 즉시 전송</li>
                         <li><strong>수신기 감시·제어:</strong> URL 클릭 시 셉시스템 접속 후 원격 감시·제어</li>
@@ -283,9 +286,9 @@
             </article>
 
             <article class="solution-card">
+                <h3>② SEB-RD (관리자용)</h3>
                 <img src="관리자용.png" alt="SEB 관리자용" class="solution-img">
                 <div class="solution-content">
-                    <h3>② SEB-RD (관리자용)</h3>
                     <ul>
                         <li><strong>SMS 발송:</strong> 주경종 작동시 "주경종 작동 + 원격 접속 URL" 즉시 전송</li>
                         <li><strong>수신기 감시·제어:</strong> URL 클릭 시 현장 수신기 접속 후 원격 감시·제어</li>
@@ -296,9 +299,9 @@
             </article>
 
             <article class="solution-card">
+                <h3>③ SEB-IO (기본형)</h3>
                 <img src="기본형.png" alt="SEB 기본형" class="solution-img">
                 <div class="solution-content">
-                    <h3>③ SEB-IO (기본형)</h3>
                     <ul>
                         <li><strong>초기 인지 알림:</strong> 주경종 작동시 "주경종 작동" SMS 발송</li>
                         <li><strong>완벽한 보호:</strong> 수신기를 100% 보호하는 '포토커플러' 절연 방식 적용</li>
