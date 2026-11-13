@@ -35,21 +35,17 @@
         .text-center { text-align: center; }
         .section-title { font-size: 2.2rem; margin-bottom: 3rem; text-align: center; }
 
-        /* 대표 컨설턴트 소개 UI */
+        /* 대표 컨설턴트 소개 UI 
         .profile-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.2rem 1.4rem; margin: 0 auto 1.8rem auto; width: fit-content; max-width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
         .profile-box .section-title { font-size: 1.65rem; margin-bottom: 0.9rem; line-height: 1.2; }
-        .profile-content { display: flex; align-items: stretch; justify-content: center; gap: 1.1rem; }
-        .profile-img-wrap { flex: 0 0 155px; display: flex; align-items: center; justify-content: center; }
-        .profile-img { width: 100%; height: 150px; object-fit: contain; background: #ffffff; padding: 0.35rem 0.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+        .profile-content { display: flex; align-items: stretch; justify-content: center; }
         .profile-list { flex: 0 1 auto; display: flex; flex-direction: column; justify-content: space-between; gap: 0.5rem; }
-        .profile-item { background: #ffffff; border: 1px solid #e2e8f0; border-left: 7px solid #e53e3e; border-radius: 8px; padding: 0.55rem 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.04); display: flex; align-items: center; flex: 1; }
-        .profile-item p { margin-bottom: 0; font-size: 1.1rem; font-weight: 700; color: #1a202c; line-height: 1.3; white-space: nowrap; }
+        .profile-item { background: #ffffff; border: 1px solid #e2e8f0; border-left: 7px solid #e53e3e; border-radius: 8px; padding: 0.55rem 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: center; flex: 1; }
+        .profile-item p { margin-bottom: 0; font-size: 1.1rem; font-weight: 700; color: #1a202c; line-height: 1.3; white-space: nowrap; text-align: center; }
         @media (max-width: 768px) {
             .profile-box { padding: 1.1rem 0.85rem; margin: 0 auto 1.5rem auto; }
             .profile-box .section-title { font-size: 1.4rem; margin-bottom: 0.75rem; }
-            .profile-content { flex-direction: column; align-items: center; gap: 0.85rem; }
-            .profile-img-wrap { flex: none; width: 100%; max-width: 160px; }
-            .profile-img { height: 135px; padding: 0.3rem 0.45rem; }
+            .profile-content { flex-direction: column; align-items: center; }
             .profile-list { width: auto; gap: 0.45rem; }
             .profile-item { padding: 0.55rem 0.75rem; }
             .profile-item p { font-size: 0.88rem; }
@@ -171,12 +167,9 @@
     </header>
 
     <section class="container" id="service" style="padding-top: 5rem;">
-        <div class="profile-box">
+                <div class="profile-box">
             <h2 class="section-title">대표 컨설턴트 소개</h2>
             <div class="profile-content">
-                <div class="profile-img-wrap">
-                    <img src="gd.png" alt="대표 컨설턴트" class="profile-img">
-                </div>
                 <div class="profile-list">
                     <div class="profile-item">
                         <p>1. LG, 현대차, 한화그룹社  소방엔지니어 20년 근무</p>
